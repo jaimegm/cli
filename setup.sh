@@ -32,9 +32,6 @@ brew install ${PACKAGES[@]}
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 
-echo "Cleaning up..."
-brew cleanup
-
 CASKS=(
     google-chrome
     google-drive-file-stream
@@ -71,6 +68,8 @@ PYTHON_PACKAGES=(
 )
 sudo pip install ${PYTHON_PACKAGES[@]}
 
+echo "Cleaning up..."
+brew cleanup
 
 ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
 
@@ -80,7 +79,7 @@ echo "
 export PATH=/bin:/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:$PATH 
 
 # Util Scripts
-source ~/.bash_aliases
+
 
 # HISTORY FILE SETTINGS	
 export HISTIGNORE='ls:ps:history'  					# Ignore thes commands in History File
@@ -137,7 +136,6 @@ alias history='history -E'
 alias jup='jupyter notebook'
 
 # Command Shortcuts & Enhancements
-alias alert="notify-send --urgency=low -i '$([ $? = 0 ] && echo terminal || echo error)' '$(history|tail -n1|sed -e "\""s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//"\"")'"
 # sleep 10; alert
 alias la='ls -A'                            # List all files
 alias l='ls -CF'
@@ -236,9 +234,9 @@ alias ..='cd ../'
 # Quick-Commands
 alias vpn='cd ~/ && sudo openvpn client.ovpn'
 alias update='pip install --upgrade .'
-alias ezsh='sudo subl ~/.zshrc'
+alias ezsh='subl ~/.zshrc'
 alias szsh='source ~/.zshrc'
-alias ea='sudo subl ~/.oh-my-zsh/custom/aliases.zsh'
+alias ea='subl ~/.oh-my-zsh/custom/aliases.zsh'
 alias sa='source ~/.oh-my-zsh/custom/aliases.zsh'
 alias spin='. venv/bin/activate'
 alias dspin='deactivate'
@@ -246,7 +244,6 @@ alias history='history -E'
 alias jup='jupyter notebook'
 
 # Command Shortcuts & Enhancements
-alias alert="notify-send --urgency=low -i '$([ $? = 0 ] && echo terminal || echo error)' '$(history|tail -n1|sed -e "\""s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//"\"")'"
 # sleep 10; alert
 alias la='ls -A'                            # List all files
 alias l='ls -CF'
