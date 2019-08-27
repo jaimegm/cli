@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-#export ZSH="/home/jaime/.oh-my-zsh"         # ZSH Home
+# export ZSH="/home/jaime/.oh-my-zsh"         # ZSH Home
 export UPDATE_ZSH_DAYS=30             # Update Cycle
 export LANG=en_US.UTF-8               # System Lanaguage
 
@@ -33,7 +33,9 @@ setopt    incappendhistory  #Immediately append to the history file, not just wh
 plugins=(
 	git
 	zsh-syntax-highlighting
-  zsh-autosuggestions
+  	zsh-autosuggestions
+  	osx
+  	brew
 	)
 
 source $ZSH/oh-my-zsh.sh
