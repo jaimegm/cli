@@ -1,11 +1,11 @@
 # Path to your oh-my-zsh installation.
-export ZSH="/home/jaime/.oh-my-zsh"         # ZSH Home
+#export ZSH="/home/jaime/.oh-my-zsh"         # ZSH Home
 export UPDATE_ZSH_DAYS=30             # Update Cycle
 export LANG=en_US.UTF-8               # System Lanaguage
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="random"
-ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" "awesomepanda" "miloshadzic" "solarized" )
 
 # Terminal Behaviour
 HYPHEN_INSENSITIVE="true"     # Make - & _ Interchangeable
@@ -15,6 +15,7 @@ COMPLETION_WAITING_DOTS="true"    # Completion Waiting Dots
 ##############################################################################
 # History Configuration
 ##############################################################################
+HIST_STAMPS="mm/dd/yyyy"
 HISTSIZE=50000               #How many lines of history to keep in memory
 HISTFILE=~/.zsh_history     #Where to save history to disk
 SAVEHIST=10000               #Number of history entries to save to disk
@@ -29,6 +30,10 @@ setopt    incappendhistory  #Immediately append to the history file, not just wh
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Plugin Configuration
-plugins=(git)
+plugins=(
+	git
+	zsh-syntax-highlighting
+  zsh-autosuggestions
+	)
 
 source $ZSH/oh-my-zsh.sh
