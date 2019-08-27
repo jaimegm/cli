@@ -1,4 +1,6 @@
 # Setup
+Extract File Types
+https://github.com/xvoland/Extract/blob/master/extract.sh
 
 # Install Plugins
 
