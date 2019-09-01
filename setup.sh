@@ -16,7 +16,7 @@ brew install findutils
 brew install bash
 
 PACKAGES=(
-    postgresql
+    #postgresql
     python3
     python
     tree
@@ -38,28 +38,28 @@ CASKS=(
     sublime-text
     spectacle
     iterm2
-	slack
+	#slack
 )
 
 echo "Installing cask apps..."
 brew cask install ${CASKS[@]}
 
-fancy_echo "Installing Node ..."
+echo "Installing Node ..."
 brew install node
 
-fancy_echo "Installing Nativefier ..."
+echo "Installing Nativefier ..."
 npm install nativefier -g
 
-fancy_echo "Downloading card-id hack ..."
+echo "Downloading card-id hack ..."
 curl --remote-name https://raw.githubusercontent.com/annaminton/trello-osx-install/master/display-card-ids.css
 
-fancy_echo "Creating Trello app ..."
+echo "Creating Trello app ..."
 nativefier --name "Trello" "http://trello.com" --inject display-card-ids.css
 
-fancy_echo "Moving to Applications ..."
+echo "Moving to Applications ..."
 rsync -a ~/Trello-darwin-x64/Trello.app/ /Applications/Trello.app/
 
-fancy_echo "Creating Dock icon"
+echo "Creating Dock icon"
 defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Trello.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
 killall Dock
 
@@ -117,13 +117,14 @@ IFS=$SAVEIFS
 
 extract Hack-v3.003-ttf.zip 
 
-cp ttf/* /Library/Fonts/
+cp ttf/* /Library/Fonts/ && echo "Installed Fonts..."
 
 rm -r ttf/
 rm -r Hack-v3.003-ttf.zip
 rm -r display-card-ids.css
 rm -r Trello-darwin-x64
 
+echo "Cleaning up...."
 
 echo "Installing Python packages..."
 PYTHON_PACKAGES=(
@@ -136,7 +137,7 @@ PYTHON_PACKAGES=(
         google-api-core
         pandas-gbq==0.10.0
         requests-oauthlib
-        atlassian-python-api==1.13.5
+        #atlassian-python-api==1.13.5
 )
 sudo pip install ${PYTHON_PACKAGES[@]}
 
@@ -172,6 +173,7 @@ echo "Installing /.bash_aliases"
 
 echo "
 # Alias Defintion File
+
 # Directory Shortcuts
 alias air='cd ~/code/airflow'
 alias ah='cd ~/code/aroundhome'
@@ -182,11 +184,13 @@ alias docs='cd ~/Documents'
 alias down='cd ~/Downloads'
 alias play='cd ~/code/playground'
 alias utils='cd ~/code/utils'
+
 # Nav Shortcuts
 alias .....='cd ../../../../'
 alias ....='cd ../../../'
 alias ...='cd ../../'
 alias ..='cd ../'
+
 # Quick-Commands
 alias vpn='cd ~/ && sudo openvpn client.ovpn'
 alias update='pip install --upgrade .'
@@ -198,6 +202,7 @@ alias spin='. venv/bin/activate'
 alias dspin='deactivate'
 alias history='history -E'
 alias jup='jupyter notebook'
+
 # Command Shortcuts & Enhancements
 # sleep 10; alert
 alias la='ls -A'                            # List all files
@@ -206,6 +211,7 @@ alias cp='cp -iv'                           # Preferred 'cp' implementation
 alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias c='clear'
+
 # Git Shortcuts
 alias commit='git commit -m'
 alias clone='git clone'
@@ -217,6 +223,8 @@ alias stash='git stash'
 alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push -u origin'
+alias gcm='git checkout master'
+
 # Airflow Shortcuts
 alias aweb='airflow webserver'
 alias sch='airflow scheduler'
@@ -233,7 +241,7 @@ export LANG=en_US.UTF-8               # System Lanaguage
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="'random'"
-ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" "awesomepanda" "miloshadzic" "solarized-powerline" )
+ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "awesomepanda" "solarized-powerline" )
 
 # Terminal Behaviour
 HYPHEN_INSENSITIVE="true"     # Make - & _ Interchangeable
@@ -267,6 +275,7 @@ plugins=(
     )
 
 #source ~/.oh-my-zsh/oh-my-zsh.sh
+source ~/oh-my-zsh/custom/aliases.zsh
  "| sudo tee -a filename >  ~/.zshrc
 
 source ~/.zshrc && echo "Sourced ~/.zshrc"
@@ -275,6 +284,7 @@ echo "Installing ~/.oh-my-zsh/custom/aliases.zsh"
 
 echo "
 # Alias Defintion File
+
 # Directory Shortcuts
 alias play='cd ~/code/playground'
 alias stor='cd ~/Volumes/Storage'
@@ -288,12 +298,14 @@ alias down='cd ~/Downloads'
 alias desk='cd ~/Desktop'
 alias code='cd ~/code/'
 alias home='cd ~/'
+
 # Nav Shortcuts
 alias ......='cd ../../../../../'
 alias .....='cd ../../../../'
 alias ....='cd ../../../'
 alias ...='cd ../../'
 alias ..='cd ../'
+
 # Quick-Commands
 alias vpn='cd ~/ && sudo openvpn client.ovpn'
 alias update='pip install --upgrade .'
@@ -303,8 +315,8 @@ alias ea='subl ~/.oh-my-zsh/custom/aliases.zsh'
 alias sa='source ~/.oh-my-zsh/custom/aliases.zsh'
 alias spin='. venv/bin/activate'
 alias dspin='deactivate'
-alias history='history -E'
 alias jup='jupyter notebook'
+
 # Command Shortcuts & Enhancements
 # sleep 10; alert
 alias la='ls -A'                            # List all files
@@ -324,6 +336,7 @@ alias stash='git stash'
 alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push -u origin'
+
 # Airflow Shortcuts
 alias aweb='airflow webserver'
 alias sch='airflow scheduler'
