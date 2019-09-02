@@ -1,5 +1,9 @@
 # Install core xcode
-xcode-select --install
+if xcode-select -p > /dev/null; then
+  echo "Core Xcode installed"
+else
+  xcode-select --install
+fi
 
 echo "Starting bootstrapping"
 
@@ -7,34 +11,36 @@ echo "Starting bootstrapping"
 if test ! $(which brew); then
     echo "Installing homebrew..."
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+else
+    echo "Homebrew Installed"
 fi
 
-# Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-brew install findutils
-
-# Install Bash 4
-brew install bash
-
 PACKAGES=(
-    #postgresql
+    findutils
     python3
     python
+    bash
     tree
     wget
     vim
     git
     zsh
+    node
 )
 
 echo "Installing packages..."
-brew install ${PACKAGES[@]}
+if brew ls --versions ${PACKAGES[@]} > /dev/null; then
+  echo " Installed ${PACKAGES[@]} "
+else
+  brew install ${PACKAGES[@]}
+fi
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 
 CASKS=(
-    google-chrome
     google-drive-file-stream
+    google-chrome
     sublime-text
     spectacle
     iterm2
@@ -42,10 +48,13 @@ CASKS=(
 )
 
 echo "Installing cask apps..."
-brew cask install ${CASKS[@]}
 
-echo "Installing Node ..."
-brew install node
+if ! brew ${CASKS[@]} brew-cask &>/dev/null; then
+    echo "Cask Installed"
+else
+    echo "Installing Casks"
+    brew cask install ${CASKS[@]}
+fi
 
 echo "Installing Nativefier ..."
 npm install nativefier -g
@@ -139,7 +148,7 @@ PYTHON_PACKAGES=(
         requests-oauthlib
         #atlassian-python-api==1.13.5
 )
-sudo pip install ${PYTHON_PACKAGES[@]}
+sudo pip3 install ${PYTHON_PACKAGES[@]}
 
 echo "Cleaning up..."
 brew cleanup
@@ -164,16 +173,12 @@ HISTSIZE=10000 										# History command length
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-
 export EDITOR='subl -w'” "| sudo tee -a filename >  ~/.bash_profile
-
-. ~/.bash_profile && echo "sourced .bash_profile"
 
 echo "Installing /.bash_aliases"
 
 echo "
 # Alias Defintion File
-
 # Directory Shortcuts
 alias air='cd ~/code/airflow'
 alias ah='cd ~/code/aroundhome'
@@ -184,13 +189,11 @@ alias docs='cd ~/Documents'
 alias down='cd ~/Downloads'
 alias play='cd ~/code/playground'
 alias utils='cd ~/code/utils'
-
 # Nav Shortcuts
 alias .....='cd ../../../../'
 alias ....='cd ../../../'
 alias ...='cd ../../'
 alias ..='cd ../'
-
 # Quick-Commands
 alias vpn='cd ~/ && sudo openvpn client.ovpn'
 alias update='pip install --upgrade .'
@@ -202,7 +205,6 @@ alias spin='. venv/bin/activate'
 alias dspin='deactivate'
 alias history='history -E'
 alias jup='jupyter notebook'
-
 # Command Shortcuts & Enhancements
 # sleep 10; alert
 alias la='ls -A'                            # List all files
@@ -211,7 +213,6 @@ alias cp='cp -iv'                           # Preferred 'cp' implementation
 alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias c='clear'
-
 # Git Shortcuts
 alias commit='git commit -m'
 alias clone='git clone'
@@ -224,12 +225,10 @@ alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push -u origin'
 alias gcm='git checkout master'
-
 # Airflow Shortcuts
 alias aweb='airflow webserver'
 alias sch='airflow scheduler'
  "| sudo tee -a filename >  ~/.bash_aliases
-
 
 echo "Installing /.zshrc"
 
@@ -238,16 +237,13 @@ echo "
 # export ZSH="/home/jaime/.oh-my-zsh"         # ZSH Home
 export UPDATE_ZSH_DAYS=30             # Update Cycle
 export LANG=en_US.UTF-8               # System Lanaguage
-
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="'random'"
+ZSH_THEME=""random""
 ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "awesomepanda" "solarized-powerline" )
-
 # Terminal Behaviour
 HYPHEN_INSENSITIVE="true"     # Make - & _ Interchangeable
 ENABLE_CORRECTION="true"      # Enable Auto-Correction
 COMPLETION_WAITING_DOTS="true"    # Completion Waiting Dots
-
 ##############################################################################
 # History Configuration
 ##############################################################################
@@ -256,15 +252,11 @@ HISTSIZE=50000               #How many lines of history to keep in memory
 HISTFILE=~/.zsh_history     #Where to save history to disk
 SAVEHIST=10000               #Number of history entries to save to disk
 #HISTDUP=erase               #Erase duplicates in the history file
-setopt    appendhistory     #Append history to the history file (no overwriting)
-setopt    sharehistory      #Share history across terminals
-setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
-
-
-
+#setopt    appendhistory     #Append history to the history file (no overwriting)
+#setopt    sharehistory      #Share history across terminals
+#setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Plugin Configuration
 plugins=(
     zsh-syntax-highlighting
@@ -273,18 +265,14 @@ plugins=(
     osx
     git
     )
-
 #source ~/.oh-my-zsh/oh-my-zsh.sh
-source ~/oh-my-zsh/custom/aliases.zsh
+source ~/.oh-my-zsh/custom/aliases.zsh
  "| sudo tee -a filename >  ~/.zshrc
-
-source ~/.zshrc && echo "Sourced ~/.zshrc"
 
 echo "Installing ~/.oh-my-zsh/custom/aliases.zsh"
 
 echo "
 # Alias Defintion File
-
 # Directory Shortcuts
 alias play='cd ~/code/playground'
 alias stor='cd ~/Volumes/Storage'
@@ -298,14 +286,12 @@ alias down='cd ~/Downloads'
 alias desk='cd ~/Desktop'
 alias code='cd ~/code/'
 alias home='cd ~/'
-
 # Nav Shortcuts
 alias ......='cd ../../../../../'
 alias .....='cd ../../../../'
 alias ....='cd ../../../'
 alias ...='cd ../../'
 alias ..='cd ../'
-
 # Quick-Commands
 alias vpn='cd ~/ && sudo openvpn client.ovpn'
 alias update='pip install --upgrade .'
@@ -316,7 +302,6 @@ alias sa='source ~/.oh-my-zsh/custom/aliases.zsh'
 alias spin='. venv/bin/activate'
 alias dspin='deactivate'
 alias jup='jupyter notebook'
-
 # Command Shortcuts & Enhancements
 # sleep 10; alert
 alias la='ls -A'                            # List all files
@@ -336,12 +321,12 @@ alias stash='git stash'
 alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push -u origin'
-
 # Airflow Shortcuts
 alias aweb='airflow webserver'
 alias sch='airflow scheduler'
  "| sudo tee -a filename >  ~/.oh-my-zsh/custom/aliases.zsh
 
+chsh -s $(which zsh)
 
 echo "Installing Zsh Themes"
 cd ~/.oh-my-zsh/custom/themes
@@ -357,24 +342,32 @@ echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> 
 source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 sudo git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-
-
 echo "Configuring OSX..."
 
 # Require password as soon as screensaver or sleep mode starts
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
-source ~/.bash_aliases 
-echo "source /.bash_aliases"
-source ~/.oh-my-zsh/custom/aliases.zsh
-echo "sourced aliases.zsh"
 
 cd ~/
 mkdir code
+mkdir Schemes
 mkdir code/infarm
 mkdir code/airflow
 mkdir code/dags
 mkdir code/utils
 mkdir code/playground
+
+echo "Installing iterm themes..."
+cd Schemes
+wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Belafonte%20Day.itermcolors
+wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/AdventureTime.itermcolors
+wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Afterglow.itermcolors
+
+echo "Source-ing files..."
+source ~/.bash_profile
+source ~/.oh-my-zsh/custom/aliases.zsh
+source ~/.bash_aliases 
+source ~/.zshrc 
+
 
 echo "Bootstrapping complete"

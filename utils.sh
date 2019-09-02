@@ -3,34 +3,52 @@
 # Install sudo apt-get install dos2unix
 # Run dos2unix utils.sh
 
-# Prompt-Color Selection
-#bold=$(tput bold)
-#underline=$(tput sgr 0 1)
-#reset=$(tput sgr0)
 
-#purple=$(tput setaf 171)
-#red=$(tput setaf 1)
-#green=$(tput setaf 76)
-#tan=$(tput setaf 3)
-#blue=$(tput setaf 38)
+SAVEIFS=$IFS
+IFS="$(printf '\n\t')"
 
-# Headers and  Logging
-e_header() { printf "\n${bold}${purple}==========  %s  ==========${reset}\n" "$@" 
+function extract {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+ else
+    for n in "$@"
+    do
+      if [ -f "$n" ] ; then
+          case "${n%,}" in
+            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar) 
+                         tar xvf "$n"       ;;
+            *.lzma)      unlzma ./"$n"      ;;
+            *.bz2)       bunzip2 ./"$n"     ;;
+            *.cbr|*.rar)       unrar x -ad ./"$n" ;;
+            *.gz)        gunzip ./"$n"      ;;
+            *.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
+            *.z)         uncompress ./"$n"  ;;
+            *.7z|*.apk|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
+                         7z x ./"$n"        ;;
+            *.xz)        unxz ./"$n"        ;;
+            *.exe)       cabextract ./"$n"  ;;
+            *.cpio)      cpio -id < ./"$n"  ;;
+            *.cba|*.ace)      unace x ./"$n"      ;;
+            *.zpaq)      zpaq x ./"$n"      ;;
+            *.arc)         arc e ./"$n"       ;;
+            *.cso)       ciso 0 ./"$n" ./"$n.iso" && \
+                              extract $n.iso && \rm -f $n ;;
+            *)
+                         echo "extract: '$n' - unknown archive method"
+                         return 1
+                         ;;
+          esac
+      else
+          echo "'$n' - file does not exist"
+          return 1
+      fi
+    done
+fi
 }
-e_arrow() { printf "➜ $@\n"
-}
-e_success() { printf "${green}✔ %s${reset}\n" "$@"
-}
-e_error() { printf "${red}✖ %s${reset}\n" "$@"
-}
-e_warning() { printf "${tan}➜ %s${reset}\n" "$@"
-}
-e_underline() { printf "${underline}${bold}%s${reset}\n" "$@"
-}
-e_bold() { printf "${bold}%s${reset}\n" "$@"
-}
-e_note() { printf "${underline}${bold}${blue}Note:${reset}  ${blue}%s${reset}\n" "$@"
-}
+
+IFS=$SAVEIFS
 
 # Command-Completion Notification
 # Must setup pushover account
