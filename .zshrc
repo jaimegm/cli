@@ -1,32 +1,30 @@
-# Configure Prompt
 
-# export ZSH=/home/jaime/.oh-my-zsh         # ZSH Home
 export UPDATE_ZSH_DAYS=30             # Update Cycle
 export LANG=en_US.UTF-8               # System Lanaguage
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/jaime/.oh-my-zsh"
+PATH=$PATH:/usr/local/bin/; export PATH
 
-#ZSH_THEME_RANDOM_CANDIDATES=( robbyrussell awesomepanda solarized-powerline )
+##### THEME Config #######
+ZSH_THEME="powerlevel10k/powerlevel10k"
+POWERLEVEL9K_MODE="awesome-patched"
+
 # Terminal Behaviour
 HYPHEN_INSENSITIVE=true     # Make - & _ Interchangeable
 ENABLE_CORRECTION=true      # Enable Auto-Correction
 COMPLETION_WAITING_DOTS=true    # Completion Waiting Dots
 
-
 # Plugin Configuration
 plugins=(
-    zsh-syntax-highlighting
-    zsh-autosuggestions
+    #zsh-syntax-highlighting
+    #zsh-autosuggestions
     brew
     osx
     git
     )
 
-#  Terminal Cofig
-ZSH_THEME="solarized-powerline"
-POWERLEVEL9K_MODE="awesome-patched"
-DEFAULT_USER=$(whoami)
 source ~/.oh-my-zsh/custom/aliases.zsh
-
+source $ZSH/oh-my-zsh.sh
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/jaime/google-cloud-sdk/path.zsh.inc' ];
@@ -42,6 +40,24 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 
 #Poetry Config
 source $HOME/.poetry/env
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+
+##############################################################################
+# History Configuration
+##############################################################################
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+HIST_STAMPS="mm/dd/yyyy"
+HISTSIZE=50000              #  How many lines of history to keep in memory
+HISTFILE=~/.zsh_history     #  Where to save history to disk
+SAVEHIST=10000              #  Number of history entries to save to disk
+HISTDUP=erase               #  Erase duplicates in the history file
+setopt appendhistory        #  Append history
+setopt sharehistory         #  Share history across terminals
+setopt incappendhistory     #  Immediate append
+setopt extendedhistory      #  Attach timestamps
 
 #####################
 #### FUNCTIONS ######
@@ -92,44 +108,3 @@ fi
 }
 
 IFS=$SAVEIFS
-
-## History wrapper
-function omz_history {
-  local clear list
-  zparseopts -E c=clear l=list
-
-  if [[ -n "$clear" ]]; then
-    # if -c provided, clobber the history file
-    echo -n >| "$HISTFILE"
-    echo >&2 History file deleted. Reload the session to see its effects.
-  elif [[ -n "$list" ]]; then
-    # if -l provided, run as if calling `fc' directly
-    builtin fc "$@"
-  else
-    # unless a number is provided, show all history events (starting from 1)
-    [[ ${@[-1]-} = *[0-9]* ]] && builtin fc -l "$@" || builtin fc -l "$@" 1
-  fi
-}
-
-# Timestamp format
-case ${HIST_STAMPS-} in
-  "mm/dd/yyyy") alias history='omz_history -f' ;;
-  "dd.mm.yyyy") alias history='omz_history -E' ;;
-  "yyyy-mm-dd") alias history='omz_history -i' ;;
-  "") alias history='omz_history' ;;
-  *) alias history="omz_history -t '$HIST_STAMPS'" ;;
-esac
-
-##############################################################################
-# History Configuration
-##############################################################################
-[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-HIST_STAMPS="mm/dd/yyyy"
-HISTSIZE=50000              #  How many lines of history to keep in memory
-HISTFILE=~/.zsh_history     #  Where to save history to disk
-SAVEHIST=10000              #  Number of history entries to save to disk
-HISTDUP=erase               #  Erase duplicates in the history file
-setopt appendhistory        #  Append history
-setopt sharehistory         #  Share history across terminals
-setopt incappendhistory     #  Immediate append
-setopt extendedhistory      #  Attach timestamps
