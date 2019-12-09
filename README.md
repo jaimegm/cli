@@ -10,3 +10,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 # Clone into /.oh-my-zsh/custom/themes/
 git clone https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/awesomepanda.zsh-theme
 git clone https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/sunrise.zsh-theme
+
+# Make Shell Script Executable
+chmod +x setup.sh
+
+# Run Script
+./setup.sh
