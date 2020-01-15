@@ -35,6 +35,7 @@ else
   brew install ${PACKAGES[@]}
 fi
 
+# Install On My Zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 
@@ -62,15 +63,6 @@ npm install nativefier -g
 echo "Downloading card-id hack ..."
 curl --remote-name https://raw.githubusercontent.com/annaminton/trello-osx-install/master/display-card-ids.css
 
-echo "Creating Trello app ..."
-nativefier --name "Trello" "http://trello.com" --inject display-card-ids.css
-
-echo "Moving to Applications ..."
-rsync -a ~/Trello-darwin-x64/Trello.app/ /Applications/Trello.app/
-
-echo "Creating Dock icon"
-defaults write com.apple.dock persistent-apps -array-add '<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>/Applications/Trello.app</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>'
-killall Dock
 
 echo "Installing fonts..."
 brew tap caskroom/fonts
@@ -91,7 +83,7 @@ function extract {
     do
       if [ -f "$n" ] ; then
           case "${n%,}" in
-            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar) 
+            *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
                          tar xvf "$n"       ;;
             *.lzma)      unlzma ./"$n"      ;;
             *.bz2)       bunzip2 ./"$n"     ;;
@@ -124,7 +116,7 @@ fi
 
 IFS=$SAVEIFS
 
-extract Hack-v3.003-ttf.zip 
+extract Hack-v3.003-ttf.zip
 
 cp ttf/* /Library/Fonts/ && echo "Installed Fonts..."
 
@@ -158,9 +150,9 @@ ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local
 echo "Installing /.bash_profile"
 
 echo "
-export PATH=/bin:/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:$PATH 
+export PATH=/bin:/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:$PATH
 # Util Scripts
-# HISTORY FILE SETTINGS	
+# HISTORY FILE SETTINGS
 export HISTIGNORE='ls:ps:history'  					# Ignore thes commands in History File
 HISTTIMEFORMAT='%h %d %H:%M:%S'						# Add timestamp information to history file
 PROMPT_COMMAND='history -a' 						# Save Command instantly, instead after successful session
@@ -366,8 +358,8 @@ wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/sch
 echo "Source-ing files..."
 source ~/.bash_profile
 source ~/.oh-my-zsh/custom/aliases.zsh
-source ~/.bash_aliases 
-source ~/.zshrc 
+source ~/.bash_aliases
+source ~/.zshrc
 
 
 echo "Bootstrapping complete"

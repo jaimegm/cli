@@ -1,6 +1,6 @@
-
 export UPDATE_ZSH_DAYS=30             # Update Cycle
 export LANG=en_US.UTF-8               # System Lanaguage
+
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/jaime/.oh-my-zsh"
 PATH=$PATH:/usr/local/bin/; export PATH
@@ -39,7 +39,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 
 #Poetry Config
-source $HOME/.poetry/env
+#source $HOME/.poetry/env
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -108,3 +108,36 @@ fi
 }
 
 IFS=$SAVEIFS
+source /Users/jaime/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/jaime/code/wegwarte/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/jaime/code/wegwarte/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/jaime/code/wegwarte/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/jaime/code/wegwarte/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/jaime/code/wegwarte/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/jaime/code/wegwarte/node_modules/tabtab/.completions/slss.zsh
+
+export GOOGLE_APP_ENGINE_DIR=/usr/local/google_appengine
+# Service Account Credentials for GCP BigQuery
+export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/creds/infarm-data-airflow-c22b7153b8cd.json
+
+# Data directory to save results to
+export DATA_DIR=/Users/jaime/code/playground
+
+# Pyenv build configs
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+export LDFLAGS="-L/usr/local/opt/readline/lib"
+export CPPFLAGS="-I/usr/local/opt/readline/include"
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
+eval "$(pyenv init -)"
