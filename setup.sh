@@ -39,31 +39,6 @@ fi
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 
-CASKS=(
-    google-drive-file-stream
-    google-chrome
-    sublime-text
-    spectacle
-    iterm2
-	#slack
-)
-
-echo "Installing cask apps..."
-
-if ! brew ${CASKS[@]} brew-cask &>/dev/null; then
-    echo "Cask Installed"
-else
-    echo "Installing Casks"
-    brew cask install ${CASKS[@]}
-fi
-
-echo "Installing Nativefier ..."
-npm install nativefier -g
-
-echo "Downloading card-id hack ..."
-curl --remote-name https://raw.githubusercontent.com/annaminton/trello-osx-install/master/display-card-ids.css
-
-
 echo "Installing fonts..."
 brew tap caskroom/fonts
 
@@ -342,15 +317,13 @@ defaults write com.apple.screensaver askForPasswordDelay -int 0
 
 cd ~/
 mkdir code
-mkdir Schemes
-mkdir code/infarm
-mkdir code/airflow
-mkdir code/dags
+mkdir config
+mkdir config/zsh_themes
 mkdir code/utils
 mkdir code/playground
 
 echo "Installing iterm themes..."
-cd Schemes
+cd config/zsh_themes
 wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Belafonte%20Day.itermcolors
 wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/AdventureTime.itermcolors
 wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Afterglow.itermcolors
