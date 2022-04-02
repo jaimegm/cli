@@ -2,13 +2,10 @@
 ####--------------------####
 
 # Directory Shortcuts
-alias cloud='cd ~/code/cloud_function_dev'
 alias air='cd ~/code/grow_with_the_flow'
-alias dags='cd ~/code/infarm_dags'
+alias dags='cd ~/code/infarm-dags'
 alias play='cd ~/code/playground'
-alias proj='cd ~/code/projects'
 alias ref='cd ~/code/reference'
-alias kosmos='cd ~/code/kosmos'
 alias docs='cd ~/Documents'
 alias down='cd ~/Downloads'
 alias desk='cd ~/Desktop'
@@ -16,6 +13,13 @@ alias sql='cd ~/code/sql'
 alias creds='cd ~/creds'
 alias code='cd ~/code/'
 alias home='cd ~/'
+
+# Infarm Repos
+alias infra='cd ~/code/data-infrastructure'
+alias dataharvest='cd ~/code/dataharvest'
+alias air='cd ~/code/grow_with_the_flow'
+alias ems='cd ~/code/ems-engine'
+alias kosmos='cd ~/code/kosmos'
 
 # Chrome
 alias chrome='open /Applications/Google\ Chrome.app'
@@ -90,8 +94,10 @@ alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push --set-upstream origin'
 alias rprune='git remote prune origin'
-#alias localprune='git branch --merged | egrep -v '(^\*|master|dev)' | xargs git branch -d'
-alias submodules='git config --file .gitmodules --get-regexp path | awk '{ print $2 }''
+alias localprune='git branch --merged | egrep -v "(^\*|master|dev) | xargs git branch -d'
+alias prea='pre-commit run --all-files'
+alias unstage='git restore --staged'
+alias grc='git rebase --continue'
 
 # Airflow Shortcuts
 alias restart='service airflow-webserver stop && service airflow-schedluer stop && git pull && sudo -H pip install --upgrade . && service airflow-webserver start && service airflow-schedluer start'
@@ -102,3 +108,5 @@ alias dev='ssh -p 22 jaime.mendoza@35.242.240.92'
 alias aweb='airflow webserver'
 alias sch='airflow scheduler'
 
+# Terraform
+alias tfix='terraform fmt -recursive'
