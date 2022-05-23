@@ -13,13 +13,18 @@ alias sql='cd ~/code/sql'
 alias creds='cd ~/creds'
 alias code='cd ~/code/'
 alias home='cd ~/'
+alias pychro='~/projects/pychronus'
+alias pro='~/projects'
 
 # Infarm Repos
 alias infra='cd ~/code/data-infrastructure'
 alias dataharvest='cd ~/code/dataharvest'
-alias air='cd ~/code/grow_with_the_flow'
 alias ems='cd ~/code/ems-engine'
 alias kosmos='cd ~/code/kosmos'
+alias pycrypto='cd ~/code/pycryptobot'
+
+# Docker
+alias dup='docker-compose up'
 
 # Chrome
 alias chrome='open /Applications/Google\ Chrome.app'
@@ -38,10 +43,7 @@ alias ..='cd ../'
 # Additional Nav Shortcuts!
 #alias pyclean='find . | grep -E '(__pycache__|\.pyc|\.pyo$)' | xargs rm -rf'
 alias flushdns='sudo killall -HUP mDNSResponder; sleep 2;'
-alias mycode='cd /Volumes/Kr8tv/Users/Jaime/code'
-alias me='cd /Volumes/Kr8tv/Users/Jaime/Desktop'
 alias resetpyenv='pyenv local --unset'
-alias setpyenv='pyenv local'
 
 # BigQuery API Shortcuts
 alias bqshow='bq show --format=prettyjson'
@@ -50,24 +52,35 @@ alias datasets='bq ls --format=pretty'
 # GCP Cli Shortcuts
 alias airreset='gcloud compute instances reset grow-with-the-flow'
 alias switch='gcloud config configurations activate'
+# gcloud container clusters get-credentials production-k8s-cluster-4e9b --region europe-west1
+# gcloud container clusters get-credentials staging-k8s-cluster-0f74 --region europe-west1
+# gcloud container clusters get-credentials testing-k8s-cluster-bbcc --region europe-west1
 alias computes='gcloud compute instances list'
 alias gconfigs='gcloud config configurations list'
 alias gwtf='grow-with-the-flow'
 
 # Quick-Commands
-alias stoppg='launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist'
-alias startpg='launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist'
 alias update='pip install --upgrade . --use-feature=2020-resolver'
 alias fixpsql='rm /usr/local/var/postgres/postmaster.pid'
+# Manage .alias
 alias sa='source ~/.oh-my-zsh/custom/aliases.zsh'
 alias ea='subl ~/.oh-my-zsh/custom/aliases.zsh'
-alias pgen='openssl rand -base64 20'
-alias mkvenv='python3 -m venv venv'
-alias spin='. venv/bin/activate'
-alias jup='jupyter notebook'
+alias ef='subl ~/config/cli/functions.sh'
+# Manage .Zshrc
 alias szsh='source ~/.zshrc'
 alias ezsh='subl ~/.zshrc'
+alias kgs='kubectl get services -n'
+# Quick-tools
+alias pgen='openssl rand -base64 20'
+alias mkvenv='python3 -m venv venv'
+## DBT
+alias drm="dbt run --models"
+alias spin='. venv/bin/activate'
+alias jup='jupyter notebook'
+
+alias efunc="subl ~/config/cli/functions.sh"
 alias dspin='deactivate'
+alias sqlproxy='cloud_sql_proxy -instances=infarm-data:europe-west1:testing-alexandria-db-instance=tcp:5433 -credential_file=/Users/jaime/creds/airflow-cloud-sql-creds.json'
 
 # Command Shortcuts & Enhancements
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
@@ -81,6 +94,8 @@ alias copy='pbcopy'
 alias p='pbpaste'
 
 # Git Shortcuts
+alias oops='git reset --soft HEAD~1'
+alias samecommit='git commit --amend --no-edit'
 alias commit='git commit -m'
 alias samecommit='git commit --amend --no-edit'
 alias clone='git clone'
@@ -94,10 +109,15 @@ alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push --set-upstream origin'
 alias rprune='git remote prune origin'
-alias localprune='git branch --merged | egrep -v "(^\*|master|dev) | xargs git branch -d'
+alias localprune='git branch -vv | grep ": gone]"|  grep -v "\*" | awk "{ print $1; }" | xargs -r git branch -D'
 alias prea='pre-commit run --all-files'
-alias unstage='git restore --staged'
+alias unstage='git restore --staged'c
 alias grc='git rebase --continue'
+
+alias pythos='ssh -p 22 pythonia@192.168.0.160'
+# Change Credentials
+alias gpythos='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/config/secrets/pythos-sa-jaime.json'
+alias gwork='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/creds/personal_gcp_service_account.json'
 
 # Airflow Shortcuts
 alias restart='service airflow-webserver stop && service airflow-schedluer stop && git pull && sudo -H pip install --upgrade . && service airflow-webserver start && service airflow-schedluer start'
@@ -107,6 +127,16 @@ alias growmachine='ssh -p 49 jaime.mendoza@34.89.145.127'
 alias dev='ssh -p 22 jaime.mendoza@35.242.240.92'
 alias aweb='airflow webserver'
 alias sch='airflow scheduler'
+alias aport='sudo lsof -i :8080'
 
 # Terraform
 alias tfix='terraform fmt -recursive'
+alias tfapply='terraform apply -input=false tfplan'
+alias tf-infra-test='terraform init -backend-config="prefix=data-infrastructure-testing" -reconfigure'
+alias tf-infra-prod='terraform init -backend-config="prefix=data-infrastructure-production" -reconfigure'
+alias tf-plan-test='terraform plan -out=tfplan -input=false -var-file="environments/testing.tfvars" -var-file="environments/terraform.tfvars"'
+alias tf-plan-prod='terraform plan -out=tfplan -input=false -var-file="environments/production.tfvars" -var-file="environments/terraform.tfvars"'
+
+# kubernetes
+alias k8p='gcloud container clusters get-credentials production-k8s-cluster --region europe-west1'
+alias k8t='gcloud container clusters get-credentials testing-k8s-cluster --region europe-west1'
