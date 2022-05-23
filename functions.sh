@@ -1,3 +1,4 @@
+# Kubernetes Functions
 function addsecret {
   kubectl create secret -n airflow generic airflow-production-helm-secrets --dry-run=client -o yaml --from-file=$1=$1 | kubeseal --format yaml --cert ~/.kubeseal/production.pem --merge-into /Users/jaime/code/grow_with_the_flow/infrastructure/deployment/helm/production-helm-secrets.yaml
 }
@@ -22,8 +23,27 @@ function rmvpod {
   kubectl delete -n $namespace pods/$1
 }
 
+function podevnts {
+  kubectl get event --namespace $namespace --field-selector involvedObject.name=$1
+}
+
+# Terraform Functions
+function tfinit {
+  terraform init -backend-config="prefix=$REPOSITORY-$1" -reconfigure
+}
+
+# Terraform Functions
+function tfplan {
+  terraform plan -out=tfplan -input=false -var-file="environments/$1.tfvars"
+}
+
 function cleanpods {
-  for pod in $(kubectl get pods --namespace $namespace | grep $1 | awk '{print $1}'); kubectl delete -n $namespace pods/$pod
+  for pod in $(kubectl get pods --namespace $namespace | grep "Terminated" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "Completed" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod;
+  for pod in $(kubectl get pods --namespace $namespace | grep "Evicted" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "NodeShutdown" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "Error" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+
 }
 
 # function rmv_shutdown_pods {

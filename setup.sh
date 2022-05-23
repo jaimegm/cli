@@ -7,7 +7,7 @@ fi
 
 echo "Starting bootstrapping"
 
-# Check for Homebrew, install if we don't have it
+# Check for Homebrew, install if missing
 if test ! $(which brew); then
     echo "Installing homebrew..."
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -17,6 +17,7 @@ fi
 
 PACKAGES=(
     findutils
+    postgresql
     python3
     python
     bash
@@ -26,6 +27,9 @@ PACKAGES=(
     git
     zsh
     node
+    jq
+    direnv
+    pyenv
 )
 
 echo "Installing packages..."
@@ -97,8 +101,6 @@ cp ttf/* /Library/Fonts/ && echo "Installed Fonts..."
 
 rm -r ttf/
 rm -r Hack-v3.003-ttf.zip
-rm -r display-card-ids.css
-rm -r Trello-darwin-x64
 
 echo "Cleaning up...."
 

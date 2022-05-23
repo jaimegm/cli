@@ -8,7 +8,21 @@
 * [Brew](https://brew.sh/)
 
 
-# Setup
+## Directory Hierarchy
+
+```sh
+config/
+|-- cli
+|   |-- functions.sh 
+|   |-- aliases.zsh
+|   |-- .zshrc
+|-- secrets
+|-- sublime
+|-- zsh_themes
+
+```
+
+## Install Cmds
 
 ```python
 # Install On My Zsh
