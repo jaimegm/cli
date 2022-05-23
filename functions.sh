@@ -100,7 +100,7 @@ function syncli {
   sudo cp .zshrc ~/config/cli/.zshrc && cd ~/config/cli && 
   # Create New Branch
   git checkout -b "$(echo "cli-sync")"-"$(prefix)" && 
-  cd ~/config/cli & git add . && git commit -m "$(echo "auto-update")"-"$(prefix)" &&
+  cd ~/config/cli & git add . && git commit -m "$(echo "auto-update")"-"$(openssl rand -hex 6)" &&
   # Push New Branch
   pbranch "$(git branch | grep '^\*' | cut -d' ' -f2)"
 
