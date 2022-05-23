@@ -32,7 +32,6 @@ function tfinit {
   terraform init -backend-config="prefix=$REPOSITORY-$1" -reconfigure
 }
 
-# Terraform Functions
 function tfplan {
   terraform plan -out=tfplan -input=false -var-file="environments/$1.tfvars"
 }
@@ -45,14 +44,6 @@ function cleanpods {
   for pod in $(kubectl get pods --namespace $namespace | grep "Error" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
 
 }
-
-# function rmv_shutdown_pods {
-#   for pod in $(kubectl get pods --namespace $1 | grep Shutdown | awk '{print $1}'); kubectl delete -n $1 pods/$pod
-# }
-
-# function rmv_terminated_pods {
-#   for pod in $(kubectl get pods --namespace $1 | grep Terminated | awk '{print $1}'); kubectl delete -n $1 pods/$pod
-# }
 
 function get_bq_schema {
   bq show -format=prettyjson $1 | jq '.schema.fields' | pbcopy
