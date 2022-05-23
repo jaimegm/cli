@@ -98,3 +98,19 @@ function extract {
     done
 fi
 }
+
+# capture the output of a command so it can be retrieved with ret
+cap () { tee /tmp/capture.out; }
+
+# return the output of the most recent command that was captured by cap
+ret () { cat /tmp/capture.out; }
+
+function syncli {
+  sudo cp .zshrc ~/config/cli/.zshrc && cd ~/config/cli && 
+  # Create New Branch
+  nbranch "$(echo "cli-sync")"-"$(prefix)" && 
+  cd ~/config/cli & git add . && commit "$(echo "auto-update")"-"$(prefix)" &&
+  # Push New Branch
+  pbranch "$(git branch | grep '^\*' | cut -d' ' -f2)"
+
+}

@@ -63,9 +63,12 @@ alias gwtf='grow-with-the-flow'
 alias update='pip install --upgrade . --use-feature=2020-resolver'
 alias fixpsql='rm /usr/local/var/postgres/postmaster.pid'
 # Manage .alias
-alias sa='source ~/.oh-my-zsh/custom/aliases.zsh'
-alias ea='subl ~/.oh-my-zsh/custom/aliases.zsh'
+alias sa='source ~/config/cli/aliases.zsh'
+alias ea='subl ~/config/cli/aliases.zsh'
 alias ef='subl ~/config/cli/functions.sh'
+alias cli='cd ~/config/cli'
+alias config='cd ~/config'
+
 # Manage .Zshrc
 alias szsh='source ~/.zshrc'
 alias ezsh='subl ~/.zshrc'
@@ -81,6 +84,7 @@ alias jup='jupyter notebook'
 alias efunc="subl ~/config/cli/functions.sh"
 alias dspin='deactivate'
 alias sqlproxy='cloud_sql_proxy -instances=infarm-data:europe-west1:testing-alexandria-db-instance=tcp:5433 -credential_file=/Users/jaime/creds/airflow-cloud-sql-creds.json'
+alias perfix='openssl rand -hex 6'
 
 # Command Shortcuts & Enhancements
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
