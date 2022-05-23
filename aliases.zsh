@@ -62,6 +62,8 @@ alias gwtf='grow-with-the-flow'
 # Quick-Commands
 alias update='pip install --upgrade . --use-feature=2020-resolver'
 alias fixpsql='rm /usr/local/var/postgres/postmaster.pid'
+alias prefix='openssl rand -hex 6'
+
 # Manage .alias
 alias sa='source ~/config/cli/aliases.zsh'
 alias ea='subl ~/config/cli/aliases.zsh'

@@ -99,8 +99,8 @@ ret () { cat /tmp/capture.out; }
 function syncli {
   sudo cp .zshrc ~/config/cli/.zshrc && cd ~/config/cli && 
   # Create New Branch
-  nbranch "$(echo "cli-sync")"-"$(prefix)" && 
-  cd ~/config/cli & git add . && commit "$(echo "auto-update")"-"$(prefix)" &&
+  git checkout -b "$(echo "cli-sync")"-"$(prefix)" && 
+  cd ~/config/cli & git add . && git commit -m "$(echo "auto-update")"-"$(prefix)" &&
   # Push New Branch
   pbranch "$(git branch | grep '^\*' | cut -d' ' -f2)"
 
