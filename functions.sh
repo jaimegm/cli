@@ -1,38 +1,11 @@
+# Change namespace env var
 function en {
-  export tfenvironment=$1
-}
-# Kubernetes Functions
-function addsecret {
-  kubectl create secret -n airflow generic airflow-production-helm-secrets --dry-run=client -o yaml --from-file=$1=$1 | kubeseal --format yaml --cert ~/.kubeseal/production.pem --merge-into /Users/jaime/code/grow_with_the_flow/infrastructure/deployment/helm/production-helm-secrets.yaml
+  export namespace=$1
 }
 
-function gpods {
-  kubectl get pods -n $namespace
-}
-
-function dpod {
-  kubectl describe pod -n $namespace $1
-}
-
-function podshell {
-  kubectl exec --stdin --tty $1 -n $namespace -- /bin/bash
-}
-
-function podlog {
-  kubectl logs -n $namespace $1
-}
-
-function fpod {
-  kubectl delete pods -n $namespace $1 --grace-period=0 --force
-}
-
-
-function rmvpod {
-  kubectl delete -n $namespace pods/$1
-}
-
-function podevnts {
-  kubectl get event --namespace $namespace --field-selector involvedObject.name=$1
+# Change environment env
+function cenv {
+  export tfenvironment=$1 
 }
 
 # Terraform Functions
@@ -43,6 +16,47 @@ function tfinit {
 function tfplan {
   terraform plan -out=tfplan -input=false -var-file="environments/$tfenvironment.tfvars"
 }
+
+# Kubeseal
+function addsecret {
+  kubectl create secret -n airflow generic airflow-production-helm-secrets --dry-run=client -o yaml --from-file=$1=$1 | kubeseal --format yaml --cert ~/.kubeseal/$tfenvironment.pem --merge-into /Users/jaime/code/grow_with_the_flow/infrastructure/deployment/$tfenvironment/$tfenvironment-helm-secrets.yaml
+}
+
+# Get Pods
+function gpods {
+  kubectl get pods -n $namespace
+}
+
+# Describe Pod
+function dpod {
+  kubectl describe pod -n $namespace $1
+}
+
+# Access Pod shell
+function podshell {
+  kubectl exec --stdin --tty $1 -n $namespace -- /bin/bash
+}
+
+# Get Pod Log
+function podlog {
+  kubectl logs -n $namespace $1
+}
+
+# Force remove pod
+function fpod {
+  kubectl delete pods -n $namespace $1 --grace-period=0 --force
+}
+
+# Remove Pod
+function rmvpod {
+  kubectl delete -n $namespace pods/$1
+}
+
+function podevnts {
+  kubectl get event --namespace $namespace --field-selector involvedObject.name=$1
+}
+
+
 
 function cleanpods {
   for pod in $(kubectl get pods --namespace $namespace | grep "Terminated" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
@@ -104,7 +118,9 @@ cap () { tee /tmp/capture.out; }
 # return the output of the most recent command that was captured by cap
 ret () { cat /tmp/capture.out; }
 
+# Auto update CLI Repo
 function syncli {
+  # Copy recent .zshrc changes
   sudo cp .zshrc ~/config/cli/.zshrc && cd ~/config/cli && 
   # Create New Branch
   git checkout -b "$(echo "cli-sync")"-"$(prefix)" && 
