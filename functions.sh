@@ -1,3 +1,6 @@
+function en {
+  export tfenvironment=$1
+}
 # Kubernetes Functions
 function addsecret {
   kubectl create secret -n airflow generic airflow-production-helm-secrets --dry-run=client -o yaml --from-file=$1=$1 | kubeseal --format yaml --cert ~/.kubeseal/production.pem --merge-into /Users/jaime/code/grow_with_the_flow/infrastructure/deployment/helm/production-helm-secrets.yaml
@@ -19,6 +22,11 @@ function podlog {
   kubectl logs -n $namespace $1
 }
 
+function fpod {
+  kubectl delete pods -n $namespace $1 --grace-period=0 --force
+}
+
+
 function rmvpod {
   kubectl delete -n $namespace pods/$1
 }
@@ -29,11 +37,11 @@ function podevnts {
 
 # Terraform Functions
 function tfinit {
-  terraform init -backend-config="prefix=$REPOSITORY-$1" -reconfigure
+  terraform init -backend-config="prefix=$REPOSITORY-$tfenvironment" -reconfigure
 }
 
 function tfplan {
-  terraform plan -out=tfplan -input=false -var-file="environments/$1.tfvars"
+  terraform plan -out=tfplan -input=false -var-file="environments/$tfenvironment.tfvars"
 }
 
 function cleanpods {
