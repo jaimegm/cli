@@ -85,7 +85,7 @@ alias jup='jupyter notebook'
 
 alias efunc="subl ~/config/cli/functions.sh"
 alias dspin='deactivate'
-alias sqlproxy='cloud_sql_proxy -instances=infarm-data:europe-west1:testing-alexandria-db-instance=tcp:5433 -credential_file=/Users/jaime/creds/dbt-cloud-sql-access-sa.json'
+alias sqlproxy='cloud_sql_proxy -instances=infarm-data:europe-west1:$tfenvironment-alexandria-db-instance=tcp:5433 -credential_file=/Users/jaime/creds/dbt-cloud-sql-access-sa.json'
 alias perfix='openssl rand -hex 6'
 
 # Command Shortcuts & Enhancements
