@@ -25,6 +25,7 @@ alias pycrypto='cd ~/code/pycryptobot'
 
 # Docker
 alias dup='docker-compose up'
+alias runc='docker run -it --entrypoint=/bin/sh'
 
 # Chrome
 alias chrome='open /Applications/Google\ Chrome.app'
@@ -119,6 +120,7 @@ alias localprune='git branch -vv | grep ": gone]"|  grep -v "\*" | awk "{ print 
 alias prea='pre-commit run --all-files'
 alias unstage='git restore --staged'c
 alias grc='git rebase --continue'
+alias cleanbranches='git branch --merged >/tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
 alias pythos='ssh -p 22 pythonia@192.168.0.160'
 # Change Credentials
