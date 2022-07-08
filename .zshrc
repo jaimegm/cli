@@ -34,6 +34,7 @@ export UPDATE_ZSH_DAYS=30             # Update Cycle
 export LANG=en_US.UTF-8               # System Lanaguage
 export ZSH=/Users/jaime/.oh-my-zsh
 export CONFIG=/Users/jaime/config/cli
+export tfenvironment=testing
 source $CONFIG/functions.sh
 source $CONFIG/aliases.zsh
 source $ZSH/oh-my-zsh.sh

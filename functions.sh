@@ -1,11 +1,11 @@
 # Change namespace env var
 function en {
-  export namespace=$1
+  export namespace="$1"
 }
 
 # Change environment env
 function cenv {
-  export tfenvironment=$1 
+  export tfenvironment="$1"
 }
 
 # Terraform Functions
@@ -19,7 +19,41 @@ function tfplan {
 
 # Kubeseal
 function addsecret {
-  kubectl create secret -n airflow generic airflow-production-helm-secrets --dry-run=client -o yaml --from-file=$1=$1 | kubeseal --format yaml --cert ~/.kubeseal/$tfenvironment.pem --merge-into /Users/jaime/code/grow_with_the_flow/infrastructure/deployment/$tfenvironment/$tfenvironment-helm-secrets.yaml
+  kubectl create secret -n airflow generic airflow-production-helm-secrets --dry-run=client -o yaml --from-file='$1'='$1' | kubeseal --format yaml --cert ~/.kubeseal/$tfenvironment.pem --merge-into /Users/jaime/code/grow_with_the_flow/infrastructure/deployment/$tfenvironment/$tfenvironment-helm-secrets.yaml
+}
+
+# Terraform Build Commands
+function build_service_account {
+  echo '''
+    resource "google_service_account" "'$1'_sa" {
+      account_id  = "'$2'"
+      description = "Add a Description"
+    }
+
+    resource "google_service_account_key" "'$1'_sa_key" {
+      service_account_id = google_service_account.'$1'.name
+    }
+
+    resource "google_secret_manager_secret" "'$1'_sa_key_secret" {
+      provider  = google-beta
+      secret_id = "'$2'-sa-key"
+
+      labels = {
+        users = "data_team"
+      }
+
+      replication {
+        automatic = true
+      }
+    }
+
+    resource "google_secret_manager_secret_version" "'$1'_sa_key_secret" {
+      provider    = google-beta
+      secret      = google_secret_manager_secret.'$1'_sa_key_secret.id
+      secret_data = google_service_account_key.'$1'_sa_key.private_key
+    }
+
+    '''
 }
 
 # Get Pods
@@ -29,50 +63,54 @@ function gpods {
 
 # Describe Pod
 function dpod {
-  kubectl describe pod -n $namespace $1
+  kubectl describe pod -n $namespace '$1'
 }
 
 # Access Pod shell
 function podshell {
-  kubectl exec --stdin --tty $1 -n $namespace -- /bin/bash
+  kubectl exec --stdin --tty '$1' -n $namespace -- /bin/bash
 }
 
 # Get Pod Log
 function podlog {
-  kubectl logs -n $namespace $1
+  kubectl logs -n $namespace '$1'
 }
 
 # Force remove pod
 function fpod {
-  kubectl delete pods -n $namespace $1 --grace-period=0 --force
+  kubectl delete pods -n $namespace '$1' --grace-period=0 --force
 }
 
 # Remove Pod
 function rmvpod {
-  kubectl delete -n $namespace pods/$1
+  kubectl delete -n $namespace pods/'$1'
 }
 
 function podevnts {
-  kubectl get event --namespace $namespace --field-selector involvedObject.name=$1
+  kubectl get event --namespace $namespace --field-selector involvedObject.name='$1'
 }
 
 
 
 function cleanpods {
-  for pod in $(kubectl get pods --namespace $namespace | grep "Terminated" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
-  for pod in $(kubectl get pods --namespace $namespace | grep "Completed" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod;
-  for pod in $(kubectl get pods --namespace $namespace | grep "Evicted" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
-  for pod in $(kubectl get pods --namespace $namespace | grep "NodeShutdown" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
-  for pod in $(kubectl get pods --namespace $namespace | grep "Error" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "Terminated" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "Completed" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod;
+  for pod in $(kubectl get pods --namespace $namespace | grep "Evicted" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "NodeShutdown" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "Error" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod; 
 
 }
 
 function get_bq_schema {
-  bq show -format=prettyjson $1 | jq '.schema.fields' | pbcopy
+  bq show -format=prettyjson '$1' | jq '.schema.fields' | pbcopy
+}
+
+function download_secret {
+  gcloud secrets versions access latest --secret '$1' | base64 -D > ~/creds/'$1'.json
 }
 
 function extract {
- if [ -z "$1" ]; then
+ if [ -z "'$1'" ]; then
     # display usage if no parameters given
     echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
     echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
