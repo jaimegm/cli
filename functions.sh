@@ -1,5 +1,5 @@
 # Change namespace env var
-function en {
+function cname {
   export namespace="$1"
 }
 
@@ -61,52 +61,70 @@ function gpods {
   kubectl get pods -n $namespace
 }
 
+function gservs {
+  kubectl get services -n $namespace
+}
+
+function gdeps {
+  kubectl get deployments -n $namespace
+}
+
 # Describe Pod
 function dpod {
-  kubectl describe pod -n $namespace '$1'
+  kubectl describe pod -n $namespace $1
+}
+
+function dserve {
+  kubectl describe service -n $namespace $1
+}
+
+function ddep {
+  kubectl describe deployment -n $namespace $1
 }
 
 # Access Pod shell
 function podshell {
-  kubectl exec --stdin --tty '$1' -n $namespace -- /bin/bash
+  kubectl exec --stdin --tty $1 -n $namespace -- /bin/bash
 }
 
 # Get Pod Log
 function podlog {
-  kubectl logs -n $namespace '$1'
+  kubectl logs -n $namespace $1
 }
 
 # Force remove pod
 function fpod {
-  kubectl delete pods -n $namespace '$1' --grace-period=0 --force
+  kubectl delete pods -n $namespace $1 --grace-period=0 --force
 }
 
 # Remove Pod
 function rmvpod {
-  kubectl delete -n $namespace pods/'$1'
+  kubectl delete -n $namespace pods/$1
 }
 
 function podevnts {
-  kubectl get event --namespace $namespace --field-selector involvedObject.name='$1'
+  kubectl get event --namespace $namespace --field-selector involvedObject.name=$1
 }
 
 
 
 function cleanpods {
-  for pod in $(kubectl get pods --namespace $namespace | grep "Terminated" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod; 
-  for pod in $(kubectl get pods --namespace $namespace | grep "Completed" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod;
-  for pod in $(kubectl get pods --namespace $namespace | grep "Evicted" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod; 
-  for pod in $(kubectl get pods --namespace $namespace | grep "NodeShutdown" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod; 
-  for pod in $(kubectl get pods --namespace $namespace | grep "Error" | awk '{print '$1'}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "Terminated" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "Completed" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod;
+  for pod in $(kubectl get pods --namespace $namespace | grep "Evicted" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "NodeShutdown" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "Error" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "ContainerStatusUnknown" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
+  for pod in $(kubectl get pods --namespace $namespace | grep "OOMKilled" | awk '{print $1}'); kubectl delete -n $namespace pods/$pod; 
 
 }
 
 function get_bq_schema {
-  bq show -format=prettyjson '$1' | jq '.schema.fields' | pbcopy
+  bq show -format=prettyjson $1 | jq '.schema.fields' | pbcopy
 }
 
-function download_secret {
-  gcloud secrets versions access latest --secret '$1' | base64 -D > ~/creds/'$1'.json
+function getsecret {
+  gcloud secrets versions access latest --secret $1 | base64 -D > ~/creds/$1.json
 }
 
 function extract {

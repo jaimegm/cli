@@ -2,6 +2,7 @@
 ####--------------------####
 
 # Directory Shortcuts
+alias gsd='gcloud secrets delete'
 alias air='cd ~/code/grow_with_the_flow'
 alias dags='cd ~/code/infarm-dags'
 alias play='cd ~/code/playground'
@@ -122,7 +123,7 @@ alias unstage='git restore --staged'c
 alias grc='git rebase --continue'
 alias cleanbranches='git branch --merged >/tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
-alias pythos='ssh -p 22 pythonia@192.168.0.160'
+alias pythos='ssh -p 22 pythonia@192.168.1.160'
 # Change Credentials
 alias gpythos='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/config/secrets/pythos-sa-jaime.json'
 alias gwork='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/creds/personal_gcp_service_account.json'
