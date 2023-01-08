@@ -30,6 +30,7 @@ PACKAGES=(
     jq
     direnv
     pyenv
+    tfenv
 )
 
 echo "Installing packages..."
@@ -301,15 +302,22 @@ echo "Installing Zsh Themes"
 cd ~/.oh-my-zsh/custom/themes
 wget https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/miloshadzic.zsh-theme
 wget https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/awesomepanda.zsh-theme
+wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/AdventureTime.itermcolors
+wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Belafonte%20Day.itermcolors
+wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Afterglow.itermcolors
 git clone https://github.com/KuoE0/oh-my-zsh-solarized-powerline-theme.git
 ln -s $PWD/solarized-powerline.zsh-theme ~/.oh-my-zsh/themes
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 
 echo "Installing Zsh Plugins"
 cd ~/.oh-my-zsh/custom/plugins/
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+echo "source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
 source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 sudo git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/oldratlee/hacker-quotes.git ~/.oh-my-zsh/custom/plugins/hacker-quotes
+
 
 echo "Configuring OSX..."
 
@@ -323,12 +331,6 @@ mkdir config
 mkdir config/zsh_themes
 mkdir code/utils
 mkdir code/playground
-
-echo "Installing iterm themes..."
-cd config/zsh_themes
-wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Belafonte%20Day.itermcolors
-wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/AdventureTime.itermcolors
-wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Afterglow.itermcolors
 
 echo "Source-ing files..."
 source ~/.bash_profile

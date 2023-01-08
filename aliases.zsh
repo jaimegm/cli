@@ -2,26 +2,28 @@
 ####--------------------####
 
 # Directory Shortcuts
-alias gsd='gcloud secrets delete'
-alias air='cd ~/code/grow_with_the_flow'
-alias dags='cd ~/code/infarm-dags'
+alias grow='cd ~/code/reference/grow_with_the_flow'
 alias play='cd ~/code/playground'
 alias ref='cd ~/code/reference'
-alias docs='cd ~/Documents'
+alias docs='cd ~/Docs'
 alias down='cd ~/Downloads'
 alias desk='cd ~/Desktop'
-alias sql='cd ~/code/sql'
 alias creds='cd ~/creds'
 alias code='cd ~/code/'
 alias home='cd ~/'
 alias pychro='~/projects/pychronus'
 alias pro='~/projects'
 
+
+# Seqana Repos
+alias work='cd ~/code/seqana'
+
+
 # Infarm Repos
-alias infra='cd ~/code/data-infrastructure'
-alias dataharvest='cd ~/code/dataharvest'
-alias ems='cd ~/code/ems-engine'
-alias kosmos='cd ~/code/kosmos'
+alias infra='cd ~/code/reference/infarm/data-infrastructure'
+alias dataharvest='cd ~/code/reference/infarm/dataharvest'
+alias ems='cd ~/code/reference/infarm/ems-engine'
+alias kosmos='cd ~/code/reference/infarm/kosmos'
 alias pycrypto='cd ~/code/pycryptobot'
 
 # Docker
@@ -33,7 +35,7 @@ alias chrome='open /Applications/Google\ Chrome.app'
 alias maps='open --new -a "Google Chrome" --args https://www.google.com/maps'
 alias drive='open --new -a "Google Chrome" --args https://drive.google.com/drive/u/0/my-drive'
 alias cal='open --new -a "Google Chrome" --args https://calendar.google.com/calendar/u/0/r'
-#https://zwbetz.com/open-a-new-google-chrome-tab-or-window-via-command-line-on-mac/
+# https://zwbetz.com/open-a-new-google-chrome-tab-or-window-via-command-line-on-mac/
 
 # Nav Shortcuts
 alias ......='cd ../../../../../'
@@ -59,7 +61,7 @@ alias switch='gcloud config configurations activate'
 # gcloud container clusters get-credentials testing-k8s-cluster-bbcc --region europe-west1
 alias computes='gcloud compute instances list'
 alias gconfigs='gcloud config configurations list'
-alias gwtf='grow-with-the-flow'
+alias gsd='gcloud secrets delete'
 
 # Quick-Commands
 alias update='pip install --upgrade . --use-feature=2020-resolver'
@@ -149,3 +151,6 @@ alias tf-plan-prod='terraform plan -out=tfplan -input=false -var-file="environme
 # kubernetes
 alias k8p='gcloud container clusters get-credentials production-k8s-cluster --region europe-west1'
 alias k8t='gcloud container clusters get-credentials testing-k8s-cluster --region europe-west1'
+
+# Blender
+alias blender= '/Applications/Blender.app/Contents/MacOS/Blender'
