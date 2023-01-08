@@ -1,4 +1,5 @@
 
+
 ##############################################################################
 ########################   History Configuration   ###########################
 ##############################################################################
@@ -38,7 +39,7 @@ export tfenvironment=testing
 source $CONFIG/functions.sh
 source $CONFIG/aliases.zsh
 source $ZSH/oh-my-zsh.sh
-source $CONFIG/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # P10K Prompt
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -77,7 +78,7 @@ export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
 [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
 
 # PYENV Config
-export PYENV_ROOT="$HOME/.pyenv"
+# export PYENV_ROOT="$HOME/.pyenv"
 # export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
@@ -85,7 +86,23 @@ eval "$(pyenv init --path)"
 
 
 ##### Poetry Config #####
-source $HOME/.poetry/env
-export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="/Users/jaime/.local/bin:$PATH"
 
 eval "$(direnv hook zsh)"
+source /Users/jaime/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /Users/jaime/.oh-my-zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jaime/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jaime/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jaime/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jaime/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+export PATH="/usr/local/opt/libpq/bin:$PATH"

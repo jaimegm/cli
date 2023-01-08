@@ -106,6 +106,9 @@ function podevnts {
   kubectl get event --namespace $namespace --field-selector involvedObject.name=$1
 }
 
+function cshell {
+  docker exec -it $1 /bin/bash
+}
 
 
 function cleanpods {
@@ -177,7 +180,7 @@ ret () { cat /tmp/capture.out; }
 # Auto update CLI Repo
 function syncli {
   # Copy recent .zshrc changes
-  sudo cp .zshrc ~/config/cli/.zshrc && cd ~/config/cli && 
+  sudo cp ~/.zshrc ~/config/cli/.zshrc && cd ~/config/cli && 
   # Create New Branch
   git checkout -b "$(echo "cli-sync")"-"$(prefix)" && 
   cd ~/config/cli & git add . && git commit -m "$(echo "auto-update")"-"$(openssl rand -hex 6)" &&
