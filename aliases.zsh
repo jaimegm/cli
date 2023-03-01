@@ -89,7 +89,8 @@ alias jup='jupyter notebook'
 
 alias efunc="subl ~/config/cli/functions.sh"
 alias dspin='deactivate'
-alias sqlproxy='cloud_sql_proxy -instances=infarm-data:europe-west1:$tfenvironment-alexandria-db-instance=tcp:5433 -credential_file=/Users/jaime/creds/dbt-cloud-sql-access-sa.json'
+alias sqlproxy='cloud_sql_proxy -instances=gee-data-access:europe-west3:testing-target-db-instance=tcp:5433 -credential_file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
+alias sqlproxy2='cloud_sql_proxy -instances=sodium-terrain-330214:europe-west3:test-migration-db=tcp:5433 -credential_file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
 alias perfix='openssl rand -hex 6'
 
 # Command Shortcuts & Enhancements
@@ -107,7 +108,6 @@ alias p='pbpaste'
 alias oops='git reset --soft HEAD~1'
 alias samecommit='git commit --amend --no-edit'
 alias commit='git commit -m'
-alias samecommit='git commit --amend --no-edit'
 alias clone='git clone'
 alias gc='git checkout'
 alias add='git add'
@@ -143,7 +143,9 @@ alias aport='sudo lsof -i :8080'
 # Terraform
 alias tfix='terraform fmt -recursive'
 alias tfapply='terraform apply -input=false tfplan'
+alias tfimport='terraform import -input=false -var-file="environments/testing.tfvars"'
 alias tf-infra-test='terraform init -backend-config="prefix=data-infrastructure-testing" -reconfigure'
+alias tfplan='terraform plan -out=tfplan -input=false -var-file="environments/testing.tfvars"'
 alias tf-infra-prod='terraform init -backend-config="prefix=data-infrastructure-production" -reconfigure'
 alias tf-plan-test='terraform plan -out=tfplan -input=false -var-file="environments/testing.tfvars" -var-file="environments/terraform.tfvars"'
 alias tf-plan-prod='terraform plan -out=tfplan -input=false -var-file="environments/production.tfvars" -var-file="environments/terraform.tfvars"'

@@ -10,7 +10,11 @@ function cenv {
 
 # Terraform Functions
 function tfinit {
-  terraform init -backend-config="prefix=$REPOSITORY-$tfenvironment" -reconfigure
+  terraform init -backend-config="prefix=$tfbackend-$tfenvironment" -reconfigure
+}
+
+function tfimport {
+  terraform import -input=false -var-file="environments/$tfenvironment.tfvars" $1
 }
 
 function tfplan {
@@ -187,4 +191,9 @@ function syncli {
   # Push New Branch
   pbranch "$(git branch | grep '^\*' | cut -d' ' -f2)"
 
+}
+
+# get onepassword secret
+function opget {
+  op item get $1 --fields label=username,label=password --vault Private
 }
