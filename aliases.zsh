@@ -17,7 +17,9 @@ alias pro='~/projects'
 
 # Seqana Repos
 alias work='cd ~/code/seqana'
-
+alias air='cd ~/code/seqana_dataflow'
+alias targ='cd ~/code/target_database'
+alias kosmos='cd ~/code/kosmos'
 
 # Infarm Repos
 alias infra='cd ~/code/reference/infarm/data-infrastructure'
@@ -48,6 +50,14 @@ alias ..='cd ../'
 #alias pyclean='find . | grep -E '(__pycache__|\.pyc|\.pyo$)' | xargs rm -rf'
 alias flushdns='sudo killall -HUP mDNSResponder; sleep 2;'
 alias resetpyenv='pyenv local --unset'
+alias abrew="/opt/homebrew/bin/brew"
+alias ibrew="arch -x86_64 /usr/local/bin/brew"
+
+# Petry Shortcuts
+alias pu='poetry update'
+alias pi='poetry install'
+alias pr='poetry run'
+alias prt='poetry run pytest --cov --cov-report html'
 
 # BigQuery API Shortcuts
 alias bqshow='bq show --format=prettyjson'
@@ -71,6 +81,7 @@ alias prefix='openssl rand -hex 6'
 # Manage .alias
 alias sa='source ~/config/cli/aliases.zsh'
 alias ea='subl ~/config/cli/aliases.zsh'
+alias ep='subl ~/.zprofile'
 alias ef='subl ~/config/cli/functions.sh'
 alias cli='cd ~/config/cli'
 alias config='cd ~/config'
@@ -89,8 +100,10 @@ alias jup='jupyter notebook'
 
 alias efunc="subl ~/config/cli/functions.sh"
 alias dspin='deactivate'
-alias sqlproxy='cloud_sql_proxy -instances=gee-data-access:europe-west3:testing-target-db-instance=tcp:5433 -credential_file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
-alias sqlproxy2='cloud_sql_proxy -instances=sodium-terrain-330214:europe-west3:test-migration-db=tcp:5433 -credential_file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
+alias sqlproxy='cloud-sql-proxy gee-data-access:europe-west3:production-seqana-database --port 5434 --credentials-file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
+alias sqlproxy2='cloud-sql-proxy sodium-terrain-330214:europe-west3:test-migration-db --port 5435 --credentials-file=/Users/jaime/config/secrets/sodium-terrain-sa.json'
+alias sqlproxy3='cloud-sql-proxy gee-data-access:europe-west3:mlflow-database --port 5436 --credentials-file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
+
 alias perfix='openssl rand -hex 6'
 
 # Command Shortcuts & Enhancements
@@ -125,13 +138,13 @@ alias unstage='git restore --staged'c
 alias grc='git rebase --continue'
 alias cleanbranches='git branch --merged >/tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
-alias pythos='ssh -p 22 pythonia@192.168.1.160'
+alias pythos='ssh -p 22 pythonia@192.168.0.160'
 # Change Credentials
 alias gpythos='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/config/secrets/pythos-sa-jaime.json'
 alias gwork='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/creds/personal_gcp_service_account.json'
 
 # Airflow Shortcuts
-alias restart='service airflow-webserver stop && service airflow-schedluer stop && git pull && sudo -H pip install --upgrade . && service airflow-webserver start && service airflow-schedluer start'
+alias restart='systemctl stop airflow-webserver && systemctl stop airflow-schedluer && git pull && poetry install && systemctl start airflow-webserver && systemctl start airflow-scheduler'
 alias start='service airflow-webserver start && service airflow-schedluer start'
 alias stop='service airflow-webserver stop && service airflow-schedluer stop'
 alias growmachine='ssh -p 49 jaime.mendoza@34.89.145.127'

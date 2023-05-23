@@ -1,4 +1,7 @@
-
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 ##############################################################################
 ########################   History Configuration   ###########################
@@ -23,7 +26,7 @@ POWERLEVEL9K_MODE="awesome-patched"
 ##### ZSH Plugins #######
 plugins=(
     zsh-syntax-highlighting
-    hacker-quotes
+    #hacker-quotes
     dirhistory
     copypath
     history
@@ -36,6 +39,7 @@ export LANG=en_US.UTF-8               # System Lanaguage
 export ZSH=/Users/jaime/.oh-my-zsh
 export CONFIG=/Users/jaime/config/cli
 export tfenvironment=testing
+source ~/.zprofile
 source $CONFIG/functions.sh
 source $CONFIG/aliases.zsh
 source $ZSH/oh-my-zsh.sh
@@ -49,74 +53,27 @@ HYPHEN_INSENSITIVE=true         # Make - & _ Interchangeable
 ENABLE_CORRECTION=true          # Enable Auto-Correction
 COMPLETION_WAITING_DOTS=true    # Completion Waiting Dots
 
-# GCloud Path & Shell Completion
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/jaime/google-cloud-sdk/path.zsh.inc' ]; 
-  then . '/Users/jaime/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/jaime/google-cloud-sdk/completion.zsh.inc' ]; 
-  then . '/Users/jaime/google-cloud-sdk/completion.zsh.inc'; fi
-
-export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-
-# Service Account Credentials for GCP BigQuery
-#export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/creds/personal_gcp_service_account.json
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
-export LDFLAGS="-L/usr/local/opt/zlib/lib"
-export CPPFLAGS="-I/usr/local/opt/zlib/include"
-export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
-export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-
-# Added by serverless binary installer
-export PATH="$HOME/.serverless/bin:$PATH"
-# Postgres
-export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
 
-# PYENV Config
-# export PYENV_ROOT="$HOME/.pyenv"
-# export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$HOME/.pyenv/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-eval "$(pyenv init --path)"
+# 1password login
+eval $(security find-generic-password -a jaime.m@seqana.com -w | op signin --account seqana.1password.eu)
+export PATH="/opt/homebrew/bin:$PATH"
 
 
-##### Poetry Config #####
-export PATH="/Users/jaime/.local/bin:$PATH"
-
+### Direnv ###
 eval "$(direnv hook zsh)"
-source /Users/jaime/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /Users/jaime/.oh-my-zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/jaime/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jaime/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/jaime/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jaime/google-cloud-sdk/completion.zsh.inc'; fi
-export PATH="/usr/local/opt/libpq/bin:$PATH"
-export PATH="/usr/local/opt/libpq/bin:$PATH"
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/jaime/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/jaime/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/jaime/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/jaime/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/jaime/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/jaime/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/jaime/opt/anaconda3/bin:$PATH"
+        export PATH="/Users/jaime/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
