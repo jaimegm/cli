@@ -131,7 +131,7 @@ function get_bq_schema {
 }
 
 function getsecret {
-  gcloud secrets versions access latest --secret $1 | base64 -D > ~/creds/$1.json
+  gcloud secrets versions access latest --secret $1 | base64 -D > ~/config/secrets/$1.json
 }
 
 function extract {
@@ -196,4 +196,9 @@ function syncli {
 # get onepassword secret
 function opget {
   op item get $1 --fields label=username,label=password --vault Private
+}
+
+function cleanport {
+  for pid in $(lsof -i tcp:$1 | awk 'NR>1 {print $2}'); do echo "Killing process $pid"; kill $pid; done
+
 }
