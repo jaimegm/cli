@@ -36,8 +36,8 @@ plugins=(
 
 export UPDATE_ZSH_DAYS=30             # Update Cycle
 export LANG=en_US.UTF-8               # System Lanaguage
-export ZSH=/Users/jaime/.oh-my-zsh
-export CONFIG=/Users/jaime/config/cli
+export ZSH=$HOME/.oh-my-zsh
+export CONFIG=$HOME/config/cli
 export tfenvironment=testing
 source ~/.zprofile
 source $CONFIG/functions.sh
