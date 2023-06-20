@@ -307,7 +307,7 @@ wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/sch
 wget https://raw.githubusercontent.com/mbadolato/iTerm2-Color-Schemes/master/schemes/Afterglow.itermcolors
 git clone https://github.com/KuoE0/oh-my-zsh-solarized-powerline-theme.git
 ln -s $PWD/solarized-powerline.zsh-theme ~/.oh-my-zsh/themes
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/themes/powerlevel10k
 echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
 
 echo "Installing Zsh Plugins"
