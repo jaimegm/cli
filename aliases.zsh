@@ -5,10 +5,8 @@
 alias grow='cd ~/code/reference/grow_with_the_flow'
 alias play='cd ~/code/playground'
 alias ref='cd ~/code/reference'
-alias docs='cd ~/Docs'
 alias down='cd ~/Downloads'
 alias desk='cd ~/Desktop'
-alias creds='cd ~/creds'
 alias code='cd ~/code/'
 alias home='cd ~/'
 alias pychro='~/projects/pychronus'
@@ -20,13 +18,6 @@ alias work='cd ~/code/seqana'
 alias air='cd ~/code/seqana_dataflow'
 alias targ='cd ~/code/target_database'
 alias kosmos='cd ~/code/kosmos'
-
-# Infarm Repos
-alias infra='cd ~/code/reference/infarm/data-infrastructure'
-alias dataharvest='cd ~/code/reference/infarm/dataharvest'
-alias ems='cd ~/code/reference/infarm/ems-engine'
-alias kosmos='cd ~/code/reference/infarm/kosmos'
-alias pycrypto='cd ~/code/pycryptobot'
 
 # Docker
 alias dup='docker-compose up'
@@ -66,9 +57,7 @@ alias datasets='bq ls --format=pretty'
 # GCP Cli Shortcuts
 alias airreset='gcloud compute instances reset grow-with-the-flow'
 alias switch='gcloud config configurations activate'
-# gcloud container clusters get-credentials production-k8s-cluster-4e9b --region europe-west1
-# gcloud container clusters get-credentials staging-k8s-cluster-0f74 --region europe-west1
-# gcloud container clusters get-credentials testing-k8s-cluster-bbcc --region europe-west1
+# gcloud container clusters get-credentials gcloud-project-id --region compute-network-region
 alias computes='gcloud compute instances list'
 alias gconfigs='gcloud config configurations list'
 alias gsd='gcloud secrets delete'
@@ -78,17 +67,21 @@ alias update='pip install --upgrade . --use-feature=2020-resolver'
 alias fixpsql='rm /usr/local/var/postgres/postmaster.pid'
 alias prefix='openssl rand -hex 6'
 
-# Manage .alias
-alias sa='source ~/config/cli/aliases.zsh'
-alias ea='subl ~/config/cli/aliases.zsh'
-alias ep='subl ~/.zprofile'
-alias ef='subl ~/config/cli/functions.sh'
+# Sublime Editor
+# alias ef='subl ~/config/cli/functions.sh'
+# alias ea='subl ~/config/cli/aliases.zsh'
+# alias ep='subl ~/.zprofile'
+# alias ezsh='subl ~/.zshrc'
+# Pycharm editor
+alias ea='pycharm ~/config/cli/aliases.zsh'
+alias ef='pycharm ~/config/cli/functions.sh'
+alias ep='pycharm ~/.zprofile'
+alias ezsh='pycharm ~/.zshrc'
+alias szsh='source ~/.zshrc'
 alias cli='cd ~/config/cli'
 alias config='cd ~/config'
 
-# Manage .Zshrc
-alias szsh='source ~/.zshrc'
-alias ezsh='subl ~/.zshrc'
+
 alias kgs='kubectl get services -n'
 # Quick-tools
 alias pgen='openssl rand -base64 20'
@@ -101,10 +94,6 @@ alias jup='jupyter notebook'
 alias efunc="subl ~/config/cli/functions.sh"
 alias dspin='deactivate'
 alias sqlproxy='cloud-sql-proxy gee-data-access:europe-west3:production-seqana-database --port 5434 --credentials-file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
-alias sqlproxy2='cloud-sql-proxy sodium-terrain-330214:europe-west3:test-migration-db --port 5435 --credentials-file=/Users/jaime/config/secrets/sodium-terrain-sa.json'
-alias sqlproxy3='cloud-sql-proxy gee-data-access:europe-west3:mlflow-database --port 5436 --credentials-file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
-
-alias perfix='openssl rand -hex 6'
 
 # Command Shortcuts & Enhancements
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
@@ -156,9 +145,10 @@ alias aport='sudo lsof -i :8080'
 # Terraform
 alias tfix='terraform fmt -recursive'
 alias tfapply='terraform apply -input=false tfplan'
-alias tfimport='terraform import -input=false -var-file="environments/testing.tfvars"'
+# alias tfimport='terraform import -input=false -var-file="environments/testing.tfvars"'
+alias tfimport='terraform import -input=false -var-file="environments/production.tfvars"'
 alias tf-infra-test='terraform init -backend-config="prefix=data-infrastructure-testing" -reconfigure'
-alias tfplan='terraform plan -out=tfplan -input=false -var-file="environments/testing.tfvars"'
+alias tfplan='terraform plan -out=tfplan -input=false -var-file="environments/production.tfvars"'
 alias tf-infra-prod='terraform init -backend-config="prefix=data-infrastructure-production" -reconfigure'
 alias tf-plan-test='terraform plan -out=tfplan -input=false -var-file="environments/testing.tfvars" -var-file="environments/terraform.tfvars"'
 alias tf-plan-prod='terraform plan -out=tfplan -input=false -var-file="environments/production.tfvars" -var-file="environments/terraform.tfvars"'
