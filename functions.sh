@@ -14,7 +14,7 @@ function tfinit {
 }
 
 function tfimport {
-  terraform import -input=false -var-file="environments/$tfenvironment.tfvars" $1
+  terraform import -input=false -var-file="environments/production.tfvars" $1
 }
 
 function tfplan {
