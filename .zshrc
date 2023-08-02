@@ -15,7 +15,7 @@ SAVEHIST=10000              #  Number of history entries to save to disk
 HISTDUP=erase               #  Erase duplicates in the history file
 setopt appendhistory        #  Append history
 #setopt sharehistory         #  Share history across terminals
-#setopt incappendhistory     #  Immediate append
+setopt incappendhistory     #  Immediate append
 setopt extendedhistory      #  Attach timestamps
 
 
@@ -79,3 +79,9 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# START: Added by Updated Airflow Breeze autocomplete setup
+source /Users/jaime/code/airflow/dev/breeze/autocomplete/breeze-complete-zsh.sh
+# END: Added by Updated Airflow Breeze autocomplete setup
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
