@@ -3,6 +3,8 @@
 
 # Directory Shortcuts
 alias grow='cd ~/code/reference/grow_with_the_flow'
+alias pred='cd /Users/jaime/code/predictors'
+alias datab='cd /Users/jaime/code/target_database/databarn'
 alias play='cd ~/code/playground'
 alias ref='cd ~/code/reference'
 alias down='cd ~/Downloads'
@@ -11,6 +13,7 @@ alias code='cd ~/code/'
 alias home='cd ~/'
 alias pychro='~/projects/pychronus'
 alias pro='~/projects'
+alias pvenvs='cd ~/Library/Caches/pypoetry/virtualenvs/'
 
 
 # Seqana Repos
@@ -93,7 +96,7 @@ alias jup='jupyter notebook'
 
 alias efunc="subl ~/config/cli/functions.sh"
 alias dspin='deactivate'
-alias sqlproxy='cloud-sql-proxy gee-data-access:europe-west3:production-seqana-database --port 5434 --credentials-file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
+alias sqlproxy='cloud-sql-proxy gee-data-access:europe-west3:production-seqana-database --port 5434 --credentials-file=/Users/jaime/config/secrets/seqana/seqana-cloud-sql-access-sa.json'
 
 # Command Shortcuts & Enhancements
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
@@ -105,6 +108,8 @@ alias la='ls -A'                            # List all files
 alias c='clear'
 alias copy='pbcopy'
 alias p='pbpaste'
+alias back="cd \$OLDPWD"
+
 
 # Git Shortcuts
 alias oops='git reset --soft HEAD~1'
@@ -120,6 +125,7 @@ alias stash='git stash'
 alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push --set-upstream origin'
+alias snif='sudo netstat -ltnp | grep :'
 alias rprune='git remote prune origin'
 alias localprune='git branch -vv | grep ": gone]"|  grep -v "\*" | awk "{ print $1; }" | xargs -r git branch -D'
 alias prea='pre-commit run --all-files'
@@ -128,6 +134,7 @@ alias grc='git rebase --continue'
 alias cleanbranches='git branch --merged >/tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
 alias pythos='ssh -p 22 pythonia@192.168.0.160'
+alias octopi='ssh -p 22 pi@192.168.0.144'
 # Change Credentials
 alias gpythos='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/config/secrets/pythos-sa-jaime.json'
 alias gwork='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/creds/personal_gcp_service_account.json'
