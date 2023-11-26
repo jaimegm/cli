@@ -202,3 +202,11 @@ function cleanport {
   for pid in $(lsof -i tcp:$1 | awk 'NR>1 {print $2}'); do echo "Killing process $pid"; kill $pid; done
 
 }
+
+function listversions {
+  gcloud artifacts versions list \
+  --package=$1 \
+  --repository=seqana-python-repo \
+  --location=europe-west3 \
+  --project=gee-data-access
+}
