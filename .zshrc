@@ -79,9 +79,15 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# START: Added by Updated Airflow Breeze autocomplete setup
-source /Users/jaime/code/airflow/dev/breeze/autocomplete/breeze-complete-zsh.sh
-# END: Added by Updated Airflow Breeze autocomplete setup
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/local/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/bin/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/bin/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+
+export SEQANA_PYTHON_REPO_PASSWORD=$(op read op://engineering/seqana-python-repo/password)
+export SEQANA_PYTHON_REPO_USERNAME=$(op read op://engineering/seqana-python-repo/username)

@@ -27,7 +27,7 @@ export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
 export LDFLAGS="-L/usr/local/opt/zlib/lib"
 export CPPFLAGS="-I/usr/local/opt/zlib/include"
 
-export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig"
+export PKG_CONFIG_PATH="/usr/local/opt/mysql-client/lib/pkgconfig"
 
 # MySQL-Client
 export LDFLAGS="-L/opt/homebrew/opt/mysql-client/lib"
@@ -35,11 +35,12 @@ export CPPFLAGS="-I/opt/homebrew/opt/mysql-client/include"
 
 # GCloud Path & Shell Completion
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/jaime/config/google-cloud-sdk/path.zsh.inc' ]; 
-	then . '/Users/jaime/config/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/usr/local/bin/google-cloud-sdk/path.zsh.inc' ]; 
+	then . '/usr/local/bin/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/jaime/config/google-cloud-sdk/completion.zsh.inc' ]; 
-	then . '/Users/jaime/config/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/usr/local/bin/google-cloud-sdk/completion.zsh.inc' ]; 
+	then . '/usr/local/bin/google-cloud-sdk/completion.zsh.inc'; fi
+
 
 
