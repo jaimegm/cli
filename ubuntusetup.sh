@@ -1,4 +1,5 @@
-sudo apt install -y zsh wget git ufw
+sudo apt install -y zsh wget git ufw curl git-core gcc make zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev libssl-dev
+
 
 if ! command -v brew >/dev/null 2>&1; then
     echo "Installing Homebrew..."
