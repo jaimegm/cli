@@ -210,3 +210,12 @@ function listversions {
   --location=europe-west3 \
   --project=gee-data-access
 }
+
+function dyt {
+  yt-dlp -f "bestvideo+bestaudio" --merge-output-format mp4 "$1" -o "/Volumes/Toshi-Satoshi/library/Music/downloads/%(title)s.%(ext)s"
+}
+
+
+function seqana-slack-me {
+  curl -d "text=$1" -d "channel=$SLACK_MEMBER_ID" -H "Authorization: Bearer $SLACK_MESSAGE_SENDER_OAUTH_TOKEN" -X POST https://slack.com/api/chat.postMessage
+}

@@ -25,6 +25,7 @@ alias air='cd ~/work/seqana_dataflow'
 alias kosmos='cd ~/work/kosmos'
 alias work='cd ~/work'
 alias down='cd ~/Downloads'
+alias orbis='cd /Users/jaime/work/orbis'
 
 # Docker
 alias dup='docker-compose up'
@@ -60,6 +61,9 @@ alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push --set-upstream origin'
 alias prea='pre-commit run --all-files'
+alias gcm='git checkout main'
+alias mainresolve='git rebase main -X theirs'
+alias resetfile='git rebase main -X theirs'
 
 alias lcompute='gcloud compute instances list'
 alias scompute='gcloud compute instances start'
@@ -117,7 +121,7 @@ alias drm="dbt run --models"
 alias spin='. venv/bin/activate'
 alias jup='jupyter notebook'
 alias dspin='deactivate'
-alias sqlproxy='cloud-sql-proxy gee-data-access:europe-west3:production-seqana-database --port 5434 --credentials-file=/Users/jaime/config/secrets/seqana-cloud-sql-access-sa.json'
+alias sqlproxy='cloud-sql-proxy gee-data-access:europe-west3:production-seqana-database --port 5434 --credentials-file=/Users/jaime/config/secrets/seqana/terraform_service_account-sa-key.json'
 
 # Command Shortcuts & Enhancements
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation

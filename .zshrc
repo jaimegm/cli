@@ -1,8 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 ##############################################################################
 ########################   History Configuration   ###########################
 ##############################################################################
@@ -25,13 +20,9 @@ POWERLEVEL9K_MODE="awesome-patched"
 
 ##### ZSH Plugins #######
 plugins=(
-    zsh-syntax-highlighting
-    #hacker-quotes
     dirhistory
     copypath
     history
-    brew
-    git
     )
 
 export UPDATE_ZSH_DAYS=30             # Update Cycle
@@ -41,9 +32,10 @@ export CONFIG=$HOME/config/cli
 export tfenvironment=testing
 source ~/.zprofile
 source $CONFIG/functions.sh
+source $CONFIG/converter_tools.sh
 source $CONFIG/aliases.zsh
 source $ZSH/oh-my-zsh.sh
-source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # P10K Prompt
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -53,17 +45,6 @@ HYPHEN_INSENSITIVE=true         # Make - & _ Interchangeable
 ENABLE_CORRECTION=true          # Enable Auto-Correction
 COMPLETION_WAITING_DOTS=true    # Completion Waiting Dots
 
-# tabtab source for packages
-# uninstall by removing these lines
-[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
-
-# 1password login
-eval $(security find-generic-password -a jaime.m@seqana.com -w | op signin --account seqana.1password.eu)
-export PATH="/opt/homebrew/bin:$PATH"
-
-
-### Direnv ###
-eval "$(direnv hook zsh)"
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/jaime/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -79,14 +60,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/usr/local/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/bin/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/usr/local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/bin/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
 export SEQANA_PYTHON_REPO_PASSWORD=$(op read op://engineering/seqana-python-repo/password)

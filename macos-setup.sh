@@ -1,4 +1,4 @@
-# Install core xcode
+
 if xcode-select -p > /dev/null; then
   echo "Core Xcode installed"
 else
@@ -7,15 +7,17 @@ fi
 
 echo "Starting bootstrapping"
 
-# Check for Homebrew, install if missing
+
 if test ! $(which brew); then
     echo "Installing homebrew..."
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-    echo "Homebrew Installed"
+    echo "Homebrew is already Installed"
 fi
 
 PACKAGES=(
+    1password-cli
     findutils
     postgresql
     python3
@@ -43,7 +45,9 @@ fi
 
 pipx ensurepath
 
-# Check if the current shell is Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+
 if [[ "$SHELL" != */zsh ]]; then
     echo "Zsh is not the default shell. Changing the default shell to Zsh..."
 
@@ -122,7 +126,7 @@ echo "Cleaning up...."
 
 echo "Installing Python packages..."
 PYTHON_PACKAGES=(
-        psycopg2-binary
+        sqlalchemy
         oauth2client
         google-api-python-client
         pandas
@@ -131,7 +135,6 @@ PYTHON_PACKAGES=(
         google-api-core
         pandas-gbq==0.10.0
         requests-oauthlib
-        #atlassian-python-api==1.13.5
 )
 sudo pipx install ${PYTHON_PACKAGES[@]}
 
@@ -142,6 +145,11 @@ ARCH=$(uname -m)
 
 if [[ "$ARCH" == "arm64" ]]; then
     echo "Apple M1 chip detected."
+    echo "Installing Google Cloud SDK..."
+    curl https://sdk.cloud.google.com | bash
+    source ~/.zshrc
+    curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.8.2/cloud-sql-proxy.darwin.arm64
+    chmod +x cloud-sql-proxy
 elif [[ "$ARCH" == "x86_64" ]]; then
     echo "Intel chipset detected."
     ### Gcloud SDK ###
@@ -178,12 +186,25 @@ fi
 
 
 
-# ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
+sudo ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
 
+wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+sudo mv "MesloLGS NF Regular.ttf" /Library/Fonts/
+wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+sudo mv "MesloLGS NF Bold.ttf" /Library/Fonts/
+wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+sudo mv "MesloLGS NF Italic.ttf" /Library/Fonts/
+wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+sudo mv "MesloLGS NF Bold Italic.ttf" /Library/Fonts/
+
+brew install powerlevel10k
+echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
+cp .zshrc ~/
 
 # Require password as soon as screensaver or sleep mode starts
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
+curl -sSL https://install.python-poetry.org | python3 - --version 1.2.0
 
 echo "Bootstrapping complete"
