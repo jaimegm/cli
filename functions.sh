@@ -212,10 +212,49 @@ function listversions {
 }
 
 function dyt {
-  yt-dlp -f "bestvideo+bestaudio" --merge-output-format mp4 "$1" -o "/Volumes/Toshi-Satoshi/library/Music/downloads/%(title)s.%(ext)s"
+  yt-dlp -f "bestvideo+bestaudio" --merge-output-format mp4 "$1" -o .
 }
 
 
 function seqana-slack-me {
   curl -d "text=$1" -d "channel=$SLACK_MEMBER_ID" -H "Authorization: Bearer $SLACK_MESSAGE_SENDER_OAUTH_TOKEN" -X POST https://slack.com/api/chat.postMessage
+}
+
+function ak {
+  poetry run python -m ipykernel install --user --name $(basename `git rev-parse --show-toplevel`) --display-name "$1"
+}
+
+function restore-gcs-file() {
+    # Split the input argument (GCS file with generation) at the '#'
+    local source_file=$1
+    local destination_file=$(echo "$source_file" | cut -d '#' -f 1)
+
+    # Copy the specific generation of the file back to its original path
+    gsutil cp "$source_file" "$destination_file"
+}
+
+function get_user_permissions {
+  # Temporary variable to store output
+  output=""
+
+  # Fetch the roles and append permissions to the output variable
+  gcloud projects get-iam-policy gee-data-access \
+    --flatten="bindings[].members" \
+    --format="value(bindings.role)" \
+    --filter="bindings.members:$1" | while read -r ROLE; do
+    output+="Permissions for role: $ROLE\n"
+    output+="$(gcloud iam roles describe "$ROLE" --format="json" | jq -r '.includedPermissions[]')\n\n"
+  done
+
+  # Print the result to console
+  echo -e "$output"
+
+  # Copy the result to clipboard (macOS: pbcopy, Linux: xclip)
+  if command -v pbcopy &> /dev/null; then
+    echo -e "$output" | pbcopy
+  elif command -v xclip &> /dev/null; then
+    echo -e "$output" | xclip -selection clipboard
+  else
+    echo "Clipboard command not found. Install pbcopy (macOS) or xclip (Linux) for clipboard support."
+  fi
 }
