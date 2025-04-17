@@ -22,10 +22,12 @@ your bash files like so:
 # Table of Contents
 
 - [Prerequisites](#prerequisites)
+- [Zsh Shell and Powerlevel10k](#zsh-shell-and-powerlevel10k)
+- [Aliases](#aliases)
 - [Gcloud Configuration](#gcloud-configuration)
 - [Shortcuts](#shortcuts)
 - [Zsh Plugins](#zsh-plugins)
-- 
+- [Secret Management](#secret-management)
 
 ## Prerequisite
 
@@ -36,17 +38,72 @@ your bash files like so:
 * [gcloud-sdk](https://cloud.google.com/sdk/docs/install)
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/)
 
+## Zsh Shell and Powerlevel10k
 
-## Gcloud Configuration
+  Zsh is an extended shell with powerful features, such as command completion and customization.
 
-Gcloud configurations are for switching between different Google Projects. This is useful for working with production, staging, testing environments (Kosmos). Every developer should have a configuration for each project: `infarm-data, infarm-backend, staging-backend-235013,testing-software-284908`
+
+1. Install Zsh:
+   ```bash
+   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+   ```
+2. Install Recomended fonts:
+```shell
+mkdir -p ~/.local/share/fonts
+
+wget -P ~/.local/share/fonts \
+https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf \
+https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf \
+https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf \
+https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+
+# Update font cache
+fc-cache -f -v
+```
+
+2. Install Powerlevel10k:
+   ```bash
+   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+   echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+   ```
+3. Configure Powerlevel10k:  
+   Run `p10k configure` after installation.
+
+
+## Aliases
+
+Aliases are simple command shortcuts that save time and make your terminal navigation more efficient. Starting with intuitive navigation shortcuts is a great way to improve your workflow:
 
 ```shell
-# Create a gcloud configuration and authorize it
-gcloud config configurations create work
-gcloud config set project work-project_id
-gcloud auth login
+# Directory Shortcuts
+alias desk='cd ~/Desktop'
+alias down='cd ~/Downloads'
+alias code='cd ~/code/'
+alias home='cd ~/'
+
+# Nav Shortcuts
+alias ......='cd ../../../../../'
+alias .....='cd ../../../../'
+alias ....='cd ../../../'
+alias ...='cd ../../'
+alias ..='cd ../'
 ```
+
+These shortcuts will help you navigate your filesystem effortlessly and reduce repetitive typing. Aliases are especially useful for development tasks or when updating your CLI configuration. With these shortcuts, you can quickly access and modify configuration files, keeping your setup efficient and organized.
+
+```shell
+# open the alias file in my editor
+alias ea='pycharm ~/config/cli/aliases.zsh'
+# open cli custom functions file in editor
+alias ef='pycharm ~/config/cli/functions.sh'
+# open the profile file in my editor
+alias ep='pycharm ~/.zprofile'
+# open the shell config in my editor
+alias ezsh='pycharm ~/.zshrc'
+# Refresh shell config / update current shell
+alias szsh='source ~/.zshrc'
+```
+
 
 ## Shortcuts
 
@@ -122,3 +179,15 @@ chmod +x setup.sh
 
 # Run Script
 ./setup.sh
+
+
+## Gcloud Configuration
+
+Gcloud configurations are for switching between different Google Projects. This is useful for working with production, staging, testing environments (Kosmos). Every developer should have a configuration for each project: `infarm-data, infarm-backend, staging-backend-235013,testing-software-284908`
+
+```shell
+# Create a gcloud configuration and authorize it
+gcloud config configurations create work
+gcloud config set project work-project_id
+gcloud auth login
+```

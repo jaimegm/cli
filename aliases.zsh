@@ -26,6 +26,7 @@ alias kosmos='cd ~/work/kosmos'
 alias work='cd ~/work'
 alias down='cd ~/Downloads'
 alias orbis='cd /Users/jaime/work/orbis'
+alias opsign='eval $(security find-generic-password -a jaime.m@seqana.com -w | op signin --account seqana.1password.eu)'
 
 # Docker
 alias dup='docker-compose up'
@@ -60,7 +61,8 @@ alias stash='git stash'
 alias unstash='git stash pop'
 alias nbranch='git checkout -b'
 alias pbranch='git push --set-upstream origin'
-alias prea='pre-commit run --all-files'
+alias dbranch='git branch -D'
+alias prea='poetry run pre-commit run --all-files'
 alias gcm='git checkout main'
 alias mainresolve='git rebase main -X theirs'
 alias resetfile='git rebase main -X theirs'
@@ -84,8 +86,7 @@ alias flushdns='sudo killall -HUP mDNSResponder; sleep 2;'
 alias resetpyenv='pyenv local --unset'
 alias abrew="/opt/homebrew/bin/brew"
 alias ibrew="arch -x86_64 /usr/local/bin/brew"
-alias pychro='~/projects/pychronus'
-alias pro='~/projects'
+alias pychro='~/code/pychronus'
 
 # BigQuery API Shortcuts
 alias bqshow='bq show --format=prettyjson'
@@ -125,9 +126,9 @@ alias sqlproxy='cloud-sql-proxy gee-data-access:europe-west3:production-seqana-d
 
 # Command Shortcuts & Enhancements
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
-alias mv='sudo mv -iv'                      # Preferred 'mv' implementation
+#alias mv='mv -iv'                      # Preferred 'mv' implementation
 alias rmv='sudo rm -r'
-alias cp='sudo cp -iv'                      # Preferred 'cp' implementation
+#alias cp='cp -iv'                      # Preferred 'cp' implementation
 alias l='ls -CF'
 alias la='ls -A'                            # List all files
 alias c='clear'
@@ -137,6 +138,7 @@ alias back="cd \$OLDPWD"
 
 
 
+alias checkn='sudo arp-scan --interface=en0 --localnet'
 alias snif='sudo netstat -ltnp | grep :'
 alias rprune='git remote prune origin'
 alias localprune='git branch -vv | grep ": gone]"|  grep -v "\*" | awk "{ print $1; }" | xargs -r git branch -D'
@@ -144,7 +146,8 @@ alias unstage='git restore --staged'
 alias grc='git rebase --continue'
 alias cleanbranches='git branch --merged >/tmp/merged-branches && vi /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
-alias pythos='ssh -p 22 pythonia@192.168.0.160'
+#alias pythos='ssh -p 22 jaime@192.168.0.160'
+alias pythos='ssh jaime@192.168.0.160'
 alias octopi='ssh -p 22 jaime@192.168.0.144'
 # Change Credentials
 alias gpythos='export GOOGLE_APPLICATION_CREDENTIALS=/Users/jaime/config/secrets/pythos-sa-jaime.json'
@@ -175,3 +178,5 @@ alias k8t='gcloud container clusters get-credentials testing-k8s-cluster --regio
 
 # Blender
 alias blender= '/Applications/Blender.app/Contents/MacOS/Blender'
+alias checksysdata='sudo true; prev_line=""; while read -r line; do [[ $(echo "$prev_line" | grep -o "$(echo $line | awk '"'"'{print $NF}'"'"')") ]] || echo "====================="; echo "$line"; prev_line="$line"; done < <(sudo du -hd1000 ~ | grep -E "G\t")'
+
