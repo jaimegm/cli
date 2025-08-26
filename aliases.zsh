@@ -38,11 +38,11 @@ alias pi='poetry install'
 alias pr='poetry run'
 alias prt='poetry run pytest --cov --cov-report html'
 
-# Pycharm editor
-alias ea='pycharm ~/config/cli/aliases.zsh'
-alias ef='pycharm ~/config/cli/functions.sh'
-alias ep='pycharm ~/.zprofile'
-alias ezsh='pycharm ~/.zshrc'
+# subl editor
+alias ea='subl ~/config/cli/aliases.zsh'
+alias ef='subl ~/config/cli/functions.sh'
+alias ep='subl ~/.zprofile'
+alias ezsh='subl ~/.zshrc'
 alias szsh='source ~/.zshrc'
 alias cli='cd ~/config/cli'
 alias config='cd ~/config'
@@ -159,7 +159,6 @@ alias start='service airflow-webserver start && service airflow-schedluer start'
 alias stop='service airflow-webserver stop && service airflow-schedluer stop'
 alias aweb='airflow webserver'
 alias sch='airflow scheduler'
-alias aport='sudo lsof -i :8080'
 
 # Terraform
 alias tfix='terraform fmt -recursive'
