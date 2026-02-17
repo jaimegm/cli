@@ -26,6 +26,10 @@ function addsecret {
   kubectl create secret -n airflow generic airflow-production-helm-secrets --dry-run=client -o yaml --from-file='$1'='$1' | kubeseal --format yaml --cert ~/.kubeseal/$tfenvironment.pem --merge-into /Users/jaime/code/grow_with_the_flow/infrastructure/deployment/$tfenvironment/$tfenvironment-helm-secrets.yaml
 }
 
+function psniff {
+  sudo lsof -i :"$1"
+}
+
 # Terraform Build Commands
 function build_service_account {
   echo '''

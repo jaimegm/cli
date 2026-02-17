@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "devtools"
+version = "0.1.0"
+description = "MIT License"
+authors = ["Jaime Mendoza <jaimegm49@gmail.com>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.32.3"
+pygithub = "^2.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
